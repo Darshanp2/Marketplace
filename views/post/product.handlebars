@@ -1,0 +1,31 @@
+  <div> 
+  <h1>{{prod.name}}</h1>  
+  <p>{{prod.description}}</p> 
+  <h2>Price: {{prod.price}}</h2>
+   <div>
+     <form  action="/product/{{prod._id}}" id="staticForm" method="post">
+        <label  class="lol" for="palstr">Enter your comment below</label>
+        <br>
+        <textarea  id="comm" name="phrase" placeholder="Enter your comment here"  class='full-width-input'></textarea>
+      </div>
+      </label>
+    <div>
+        {{#if error}}
+        <p>{{error}}</p>
+        {{/if}}
+    </div>
+    <label>
+      <div class="form-group">
+        <button type="submit" class="btn">Submit</button>
+      </div>
+      
+      </form>
+      <h3>Comments</h3>
+      <ul>
+    {{#each comments}}
+<li>{{comment}}</li>
+    {{/each}}
+  </ul>
+
+  
+</div> 
