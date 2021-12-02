@@ -1,19 +1,21 @@
 {
-  "name": "project",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node app.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "blueimp-md5": "^2.19.0",
-    "express": "^4.17.1",
-    "express-handlebars": "^6.0.1",
-    "express-session": "^1.17.2",
-    "mongodb": "^4.2.0"
-  }
+    "name": "project",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "express": "^4.17.1",
+        "express-handlebars": "^6.0.2",
+        "express-session": "^1.17.2",
+        "express-sesssion": "^1.15.5",
+        "mongodb": "^4.2.0",
+        "utils": "^0.3.1"
+    }
 }
