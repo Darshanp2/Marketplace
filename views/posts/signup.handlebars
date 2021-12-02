@@ -1,0 +1,51 @@
+
+<main>
+
+
+<div class="login-container" id = "signup-container">
+    <div class="login-header" id = "signup-header">
+        <h1>User Sign Up</h1>
+    </div>
+    <div id = "signupError" class = "signError" hidden>
+        
+    </div>
+    <form method="POST" id="signup-form" action="/signup">
+        
+        <div class="form-elem">
+            <label for="name">name:</label>
+            <input name="name" id="name" type="text" value="{{name}}" placeholder = "name 4 characters minimum">
+        </div>
+         <div class="form-elem">
+            <label for="address">address:</label>
+            <input name="address" id="address" type="text" value="{{address}}" placeholder = "enter your full address">
+        </div> 
+        <div class="form-elem">
+            <label for="phoneNumber">phoneNumber:</label>
+            <input name="phoneNumber" id="phoneNumber" type="text" value="{{phoneNumber}}" placeholder = "enter your phoneNumber">
+        </div> 
+  
+         <div class="form-elem">
+            <label for="email">email:</label>
+            <input name="email" id="email" type="text" value="{{email}}" placeholder = "email 4 characters minimum">
+        </div>
+        <div class="form-elem">
+            <label for="password">Password:</label>
+            <input name="password" id="password" type="password" value="{{password}}" placeholder = "password(6 characters minimum)">
+        </div>
+        
+        <button type="submit">Sign Up</button>
+    </form>
+</div>
+
+    <div>
+
+        <a href="/" class="card-link">Already have an account? Click here to log-in</a>
+</div>
+
+{{#if error}}
+    <div class="login-error">
+        <p>{{error}}</p>
+    </div>
+{{/if}}
+</main>
+
