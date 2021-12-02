@@ -1,19 +1,3 @@
-<<<<<<< Updated upstream
-// const express = require('express');
-// const router = express.Router();
-// const data = require('../data');
-// const productData = data.product;
-
-// router.get('/delete/:id',async (req,res) => {
-//     let id = req.params.id;
-//     const removeProduct = await productData.deleteProduct(id)
-//     let userID = req.session.
-//     if(removeProduct){
-//         res.redirect()
-//     }
-
-// })
-=======
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
@@ -70,5 +54,15 @@ router.post('/:id', async(req, res) => {
     }
 });
 
+router.get('/delete/:id',async (req,res) => {
+    let id = req.params.id;
+    const removeProduct = await productData.deleteProduct(id)
+    let userID = req.session.userID
+    if(removeProduct){
+        res.redirect('/user/updateProfile')
+    }
+
+})
+
 module.exports = router;
->>>>>>> Stashed changes
+

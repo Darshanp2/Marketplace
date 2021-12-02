@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
@@ -31,14 +30,4 @@ router.post('/updateProfile', async (req, res) => {
     }
 })
 
-
-=======
-const express = require('express');
-const router = express.Router();
-const data = require('../data');
-const userData = data.user;
-
-
-
->>>>>>> Stashed changes
 module.exports = router;
