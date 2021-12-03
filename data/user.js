@@ -4,7 +4,6 @@ const product = mongoCollections.product;
 let { ObjectId } = require("mongodb");
 
 const bcrypt = require("bcryptjs");
-const utils = require("./utils");
 
 const saltRounds = 16;
 
@@ -55,7 +54,7 @@ async function createUser(name, address, phoneNumber, email, password) {
   for (let i of password) if (i == " ") throw `password has empty spaces`;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-  if (await utils.emailExists(email)) {
+  if (await emailExists(email)) {
     return "email already taken";
   }
 
@@ -74,6 +73,15 @@ async function createUser(name, address, phoneNumber, email, password) {
 
   return { userInserted: true };
 }
+
+async function emailExists(email) {
+  email = email.toLowerCase();
+
+  const loginCollection = await user();
+
+  return (await loginCollection.findOne({ email: email })) !== null;
+}
+
 async function checkUser(email, password) {
   const userCollection = await user();
 
