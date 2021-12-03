@@ -19,4 +19,5 @@ module.exports = {
     user: getCollectionFn('user'),
     product: getCollectionFn('product'),
     cart: getCollectionFn('cart')
+
 }

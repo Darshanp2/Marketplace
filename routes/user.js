@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
       res.redirect("/private");
       return;
     } else {
-      res.render("posts/login");
+      res.render("posts/landingpage");
     }
   } catch (e) {
     res.status(500).json({ error: e });
@@ -55,7 +55,7 @@ router.get("/login", async (req, res) => {
       res.redirect("/private");
       return;
     } else {
-      res.redirect("/");
+      res.render("posts/login");
     }
   } catch (e) {
     res.status(500).json({ error: e });
@@ -78,6 +78,7 @@ router.get("/signup", async (req, res) => {
 router.post("/signup", async (req, res) => {
   const name = req.body.name;
   const address = req.body.address;
+  console.log(address)
   const phoneNumber = req.body.phoneNumber;
 
   const email = req.body.email;
@@ -95,14 +96,7 @@ router.post("/signup", async (req, res) => {
   }
 
   try {
-    let newUser = await usersData.createUser(
-      name,
-      address,
-      phoneNumber,
-      email,
-      password
-    );
-
+    let newUser = await userData.createUser(name,address,phoneNumber,email,password)
     if (newUser.userInserted == true) {
       res.redirect("/");
     } else {

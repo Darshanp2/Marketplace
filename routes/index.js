@@ -3,6 +3,7 @@ const productRoutes = require('./product');
 const cartRoutes = require('./cart');
 
 const routes = (app) => {
+    app.use('/',userRoutes)
     app.use('/user', userRoutes);
     app.use('/product', productRoutes);
     app.use('/cart', cartRoutes);
