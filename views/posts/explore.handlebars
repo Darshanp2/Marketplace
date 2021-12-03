@@ -1,0 +1,37 @@
+
+
+<div class="container m-5">
+    <h1>List of Products</h1>
+    <div class="row">
+        <div class="col col-4">
+            <label for="myInput"></label>
+            <input type="text" class="form-control" id="myInput" onkeyup="fName('myInput',0)" placeholder="Search Product Name">
+        </div>
+        
+    </div>
+    
+</div>
+
+<div class="container m-5">
+    <table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Product Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each productList}}
+        <tr class="clickable-row" id="{{this._id}}" data-href="/product/{{this._id}}">
+            <td><a href="/product/{{this._id}}">{{this.productName}}</a></td>
+            <td>{{this.price}}</td>
+            <td>{{this.image}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</div>
+<div class="container m-5" id="no-result" hidden="">
+    <p><span class="fa fa-exclamation-circle">&#0160;</span>No results found</p>
+</div>

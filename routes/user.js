@@ -39,7 +39,8 @@ router.post("/updateProfile", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     if (req.session.userId) {
-      res.redirect("/private");
+      res.render("posts/landingpage");
+  
       return;
     } else {
       res.render("posts/landingpage");
@@ -49,18 +50,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/login", async (req, res) => {
-  try {
-    if (req.session.userId) {
-      res.redirect("/private");
-      return;
-    } else {
-      res.render("posts/login");
-    }
-  } catch (e) {
-    res.status(500).json({ error: e });
-  }
-});
+
 
 router.get("/signup", async (req, res) => {
   try {
@@ -131,7 +121,7 @@ router.post("/login", async (req, res) => {
   const password = req.body.password.toString().trim();
 
   if (!email || !password) {
-    res.status(401).render("posts/login", {
+    res.status(401).render("posts/landingpage", {
       error: "Missing email or password.",
     });
     return;
@@ -139,21 +129,20 @@ router.post("/login", async (req, res) => {
 
   // Retrieve user from file
   try {
-    let newUser1 = await usersData.checkUser(email, password);
+    let newUser1 = await userData.checkUser(email, password);
     if (newUser1.authenticated == true) {
       req.session.userId = newUser1.userId;
-      res.status(200).redirect("/private");
-      return;
+      console.log(req.session.userId)
+      res.redirect("/");
     } else {
-      res.status(401).render("posts/login", {
+      res.status(401).render("posts/landingpage", {
         error: "Wrong email or password.",
         email: email,
       });
-      return;
     }
     // return to main page?
   } catch (e) {
-    res.status(401).render("posts/login", {
+    res.status(401).render("posts/landingpage", {
       hasErrors: true,
       error: "You did not provide a valid email and/or password.",
       title: "Login",
@@ -161,7 +150,6 @@ router.post("/login", async (req, res) => {
 
       partial: "signup",
     });
-    return;
   }
 });
 router.get("/logout", async (req, res) => {
