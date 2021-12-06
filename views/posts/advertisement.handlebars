@@ -1,26 +1,94 @@
-<h1>Post your product</h1>
-  <form method="POST" id='form'>
+<section  class="vh-100"  style="background-color: #eee;" >
+    <form class="mx-1 mx-md-4" method="POST" id='form'>
+
+ <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-9">
+              <p  class="text-center  h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Post your product</p>
+
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body">
+
+
+            <div class="row align-items-center pt-4 pb-3">
+
+      <div class="col-md-3 ps-5">
+
+          <h6 class="mb-0">Product Name:</h6>
+
+       </div>
+  <div class="col-md-9 pe-5">
     <label for="productName">
-      Product Name:
-      <input id="productName" type="text" name="productName" id="productName" placeholder="Product Name"><br><br>
+
+<input class="form-control form-control-lg" id="productName"  size="100" type="text" name="productName" id="productName" placeholder="Product Name">
     </label>
+
+              </div>
+            </div>
+
+      <hr class="mx-n3">
+
+
+<div class="row align-items-center py-3">
+              <div class="col-md-3 ps-5">
+
+                <h6 class="mb-0">Description:</h6>
+
+              </div>
+              <div class="col-md-9 pe-5">
 
     <label for="description">
-      Description
-      <input id="description" type="text" name="description" id="description" placeholder="Description"><br><br>
+
+      <textarea class="form-control form-control-lg" cols="200" size="100" rows="3" id="description" type="text" name="description" id="description" placeholder="Description"></textarea>
     </label>
 
+              </div>
+            </div>
+            
     
+ <hr class="mx-n3">
+
+<div class="row align-items-center py-3">
+      <div class="col-md-3 ps-5">
+   <h6 class="mb-0">Price:</h6>
+
+    </div>
+    <div class="col-md-9 pe-5">
     <label for="price">
-      Price
-      <input id="price" type="number" name="price" id="price" placeholder="Price"><br><br>
+
+      <input class="form-control form-control-lg"id="price"  size="100"type="number" name="price" id="price" placeholder="Price">
     </label>
 
-    <label for="image">Upload Images for your product:</label><br>
-    <input type="file" id="productImg" name="productImg"  accept="image/png, image/jpeg"><br><br>
+          </div>
+      </div>
 
-    <button type="submit" id="button">Submit</button><br>
-  </form>
+ <hr class="mx-n3">
+
+<div class="row align-items-center py-3">
+  <div class="col-md-3 ps-5">
+   <label  for="image"><h6 class="mb-0">Upload Images for your product:</h6></label>
+ </div>
+<div class="col-md-9 pe-5">
+<input class="form-control form-control-lg" type="file" id="productImg" name="productImg"  accept="image/png, image/jpeg">
+  <div class="small text-muted mt-2">Upload your product image</div>
+ </div>   
+  </div>
+
+<hr class="mx-n3">
+<div class="px-5 py-4">
+
+<button class="btn btn-primary btn-lg" type="submit" id="button">Submit</button><br>
+</div>
+</div>
+
+</div>
+  </div>
+
+      </div>
+    </div> 
+      </form>
+
+    </section>
   {{#if hasErrors}}
     <p id="cl">{{error}}</p>
   {{/if}}
