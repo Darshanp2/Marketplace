@@ -1,0 +1,26 @@
+<h1>Post your product</h1>
+  <form method="POST" id='form' action="/product/advertisement/upload" enctype="multipart/form-data">
+    <label for="productName">
+      Product Name:
+      <input id="productName" type="text" name="productName" id="productName" placeholder="Product Name"><br><br>
+    </label>
+
+    <label for="description">
+      Description
+      <input id="description" type="text" name="description" id="description" placeholder="Description"><br><br>
+    </label>
+
+    
+    <label for="price">
+      Price
+      <input id="price" type="number" name="price" id="price" placeholder="Price"><br><br>
+    </label>
+
+    <label for="productImg">Upload Images for your product:</label><br>
+    <input type="file" name="productImg"  accept=".png, .jpeg, .jpg"><br><br>
+
+    <button type="submit" id="button">Submit</button><br>
+  </form>
+  {{#if hasErrors}}
+    <p id="cl">{{error}}</p>
+  {{/if}}

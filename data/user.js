@@ -56,7 +56,7 @@ async function createUser(name, address, phoneNumber, email, password) {
 console.log("inside create user")
   if (await emailExists(email)) {
     return "email already taken";
-  }*/
+  }
 
   const userCollection = await user();
   let newUser = {
@@ -92,7 +92,7 @@ async function checkUser(email, password) {
     throw `error`;
   }
   if (await bcrypt.compare(password, res.hashedPassword)) {
-    return { userId: res._id, authenticated: true };
+    return { userId: removeObjectFromId(res)._id, authenticated: true };
   } else {
     throw `Password not match`;
   }

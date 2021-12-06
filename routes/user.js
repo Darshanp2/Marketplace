@@ -5,7 +5,6 @@ const userData = data.user;
 
 router.get("/updateProfile", async (req, res) => {
   try {
-    let id = "61a7ea01a7e4d0fd6a34d230";
     const result = await userData.getUser(id);
     //sconsole.log(result.products)
     res.render("posts/updateprofile", {
@@ -17,11 +16,20 @@ router.get("/updateProfile", async (req, res) => {
     res.json(e);
   }
 });
+// router.post("/", async (req, res) => {
+  
+//   try{
+//       res.redirect("/");
+//     }
+//   catch (e) {
+//     res.status(500).json({ error: e });
+//   }
+// }),
 router.post("/updateProfile", async (req, res) => {
   try {
     let input = req.body;
     let { Name, Email, password, Address, phone } = input;
-    let id = "61a7ea01a7e4d0fd6a34d230";
+  
     let updateUser = await userData.updateProfile(
       Name,
       Email,
@@ -38,8 +46,8 @@ router.post("/updateProfile", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    if (req.session.userId) {
-      res.redirect("/private");
+    if (req.session.user) {
+      res.render("posts/landingpage" ,{user:req.session.user});
       return;
     } else {
       res.render("posts/landingpage");
@@ -49,22 +57,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/login", async (req, res) => {
-  try {
-    if (req.session.userId) {
-      res.redirect("/private");
-      return;
-    } else {
-      res.render("posts/login");
-    }
-  } catch (e) {
-    res.status(500).json({ error: e });
-  }
-});
+
 
 router.get("/signup", async (req, res) => {
   try {
-    if (req.session.userId) {
+    if (req.session.user) {
       res.status(200).redirect("/private");
     }
     res.status(200).render("posts/signup", {
@@ -131,7 +128,7 @@ router.post("/login", async (req, res) => {
   const password = req.body.password.toString().trim();
 
   if (!email || !password) {
-    res.status(401).render("posts/login", {
+    res.status(401).render("posts/landingpage", {
       error: "Missing email or password.",
     });
     return;
@@ -139,21 +136,19 @@ router.post("/login", async (req, res) => {
 
   // Retrieve user from file
   try {
-    let newUser1 = await usersData.checkUser(email, password);
+    let newUser1 = await userData.checkUser(email, password);
     if (newUser1.authenticated == true) {
-      req.session.userId = newUser1.userId;
-      res.status(200).redirect("/private");
-      return;
+      req.session.user = newUser1.userId;
+      res.redirect("/");
     } else {
-      res.status(401).render("posts/login", {
+      res.status(401).render("posts/landingpage", {
         error: "Wrong email or password.",
         email: email,
       });
-      return;
     }
     // return to main page?
   } catch (e) {
-    res.status(401).render("posts/login", {
+    res.status(401).render("posts/landingpage", {
       hasErrors: true,
       error: "You did not provide a valid email and/or password.",
       title: "Login",
@@ -161,14 +156,13 @@ router.post("/login", async (req, res) => {
 
       partial: "signup",
     });
-    return;
   }
 });
 router.get("/logout", async (req, res) => {
   res.clearCookie("AuthCookie");
   res.clearCookie("Build Session");
   req.session.destroy();
-  res.render("posts/logout");
+  res.render("posts/landingpage");
 });
 
 module.exports = router;
