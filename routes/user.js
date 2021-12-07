@@ -47,6 +47,7 @@ router.post("/updateProfile", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     if (req.session.user) {
+      console.log(req.session.user)
       res.render("posts/landingpage" ,{user:req.session.user});
       return;
     } else {

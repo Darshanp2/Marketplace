@@ -1,8 +1,9 @@
 const mongoCollections = require('../config/mongoCollections');
 const product = mongoCollections.product;
+const user = mongoCollections.user;
 const { ObjectId } = require('bson');
 
-async function create(productName, description,price,img) {
+async function create(productName, description,price,img,sellerID) {
 
     if (!productName) throw [400,"You must provide with all the details"];
     if (!description) throw[400,"You must provide with all the details"];
@@ -18,13 +19,16 @@ async function create(productName, description,price,img) {
 
     if (price < 0) throw[400,"You must provide valid price"];
     
+    const usersCollection=await user()
     const productCollection = await product();
+
+
 
     let newProduct = {
         productName: productName,
         description: description,
         image: img,
-        sellerId: null,
+        sellerId: sellerID,
         purchased: false,
         price: price,
         comments: []
@@ -33,6 +37,13 @@ async function create(productName, description,price,img) {
     const insertInfo = await productCollection.insertOne(newProduct);
     const newId = insertInfo.insertedId;
     const productList = await this.get(newId);
+    // const userCollection = await user();
+    // const userModel = await userCollection.findOne({ _id: req.session.user._id });
+    // console.log(req.session.user._id)
+    // const productCollection = await product();
+    // const proModel = await userCollection.findOne({ productName: productName });
+    // console.log(proModel._id)
+    // const z = await productCollection.updateOne({_id: proModel._id},{$addToSet:{sellerID: userModel._id}});
     productList["_id"] = productList["_id"].toString();
     return productList;
 

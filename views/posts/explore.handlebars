@@ -23,8 +23,8 @@
     </thead>
     <tbody>
         {{#each productList}}
-        <tr class="clickable-row" id="{{this._id}}" data-href="/productdetails/{{this._id}}">
-            <td><a href="/productdetails/{{this._id}}">{{this.productName}}</a></td>
+        <tr class="clickable-row" id="{{this._id}}" data-href="productdetails/{{this._id}}">
+            <td><a href="productdetails/{{this._id}}">{{this.productName}}</a></td>
             <td>{{this.price}}</td>
             <td><img src={{this.image}} /></td>
         </tr>

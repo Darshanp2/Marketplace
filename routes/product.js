@@ -1,8 +1,11 @@
+const mongoCollections = require('../config/mongoCollections');
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const productData = data.product;
 const multer = require("multer");
+const product = mongoCollections.product;
+const { ObjectId } = require('bson');
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -80,6 +83,7 @@ router.get('/advertisement', async (req, res) => {
     try{ 
       if(req.session.user){
       res.render('posts/advertisement', { title: 'Post' });
+
       }
       else{
         res.render('posts/landingpage',{error: 'You need to login first'})
@@ -135,11 +139,16 @@ router.get('/advertisement', async (req, res) => {
       //   return
       // } 
       const { productName, description, price} = params;
-      let newProduct = await productData.create( productName, description, price, imagex);
-        if (newProduct.insertInfo == true) {
+      if(req.session.user){
+        console.log('111')
+        let userID=req.session.user
+        console.log(userID)
+
+      
+        let newProduct = await productData.create( productName, description, price, imagex,userID);
           res.render("posts/landingpage");
           return;
-        }
+      }
         else{
           res.status(400).render('posts/landingpage', {title: "Product Posted"});
           return;
