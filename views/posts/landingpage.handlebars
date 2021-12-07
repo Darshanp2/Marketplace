@@ -1,29 +1,35 @@
-<div class="jumbotron jumbotron-fluid jumbotron-home">
-  <div class="container container-home">
-    <h1 class="display-4">MarketPlace</h1>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-    <p class="lead">Marketplace is  a platform for people who wants to buy or sell  new/used products
+<div>
+    <h1>MarketPlace</h1>
+<dl>
+    <dd>Marketplace is  a platform for people who wants to buy or sell  new/used products
 Users who wants to buy any product can explore the list of products according to the 
 category and prices and they can also find the seller details on the website
 In the same way, the users who wants to sell their product can post the 
 advertisement of the product they want to sell by adding the relevant information of 
 the product
-    </p>
-  </div>
+    </dd>
+</dl>
+
+
+<form action="product/exploreproduct" method="get">
+<input type="submit" value="Explore Products" />
+</form>
+<form action="product/advertisement" method="get">
+<input type="submit" value="Post an advertisement" />
+</form>
+<p>{{error}}</p>
 </div>
 
-
-
-<div>
+{{#if user}}
+<p><a href="/logout"  id="Log-out" >Log Out</a></p>
+{{else}}
+<div id="form"  >
 
 <h2>Login here</h2>
-</div>
 
-
-  <form method="POST" id="login-form" action="/login">
-    <div class="form-elem">
+<div class="form-elem" >
+  <form method="POST" id="login-form" action="/login" >
+    
       <label for="email">email.:</label>
       <input
         name="email"
@@ -32,8 +38,7 @@ the product
         value="{{email}}"
         placeholder="email"
       />
-    </div>
-    <div class="form-elem">
+    
       <label for="password">Password:</label>
       <input
         name="password"
@@ -43,19 +48,17 @@ the product
       />
     </div>
     <button type="submit">Login</button>
+    <a href="/signup" class="carrd-link">Need to register? Click here to sign-up</a>
   </form>
 </div>
- </div>
-     </form>
-        <a href="/signup" class="carrd-link">Need to register? Click here to sign-up</a>
-    </div>
-</div>
+{{!-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script> --}}
+ 
+ {{/if}}
+ 
+ 
+ 
+ 
 
-<form action="/product/exploreproduct" method="get">
-<input type="submit" value="Explore Products" />
-<div>
-</form>
-<form action="/product/advertisement" method="get">
-<input type="submit" value="Post an advertisement" />
-</form>
-</div>
+        
+  

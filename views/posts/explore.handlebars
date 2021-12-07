@@ -1,46 +1,16 @@
-<section  class="vh-100"  style="background-color: #eee;" >
 
-<div class="product-filter">
-    
+
 <div class="container m-5">
-
-  <h1>List of Products</h1>
-     <div class="float-container">
-
-   <div class="float-child">
-        <div class="">
+    <h1>List of Products</h1>
+    <div class="row">
+        <div class="col col-4">
             <label for="myInput"></label>
-            <input style=" display:inline-block;
-   width:100%" height="48" type="text" class="form-control" id="myInput" onkeyup="fName('myInput',0)" placeholder="Search Product Name">
+            <input type="text" class="form-control" id="myInput" onkeyup="fName('myInput',0)" placeholder="Search Product Name">
         </div>
-   
-
- </div>
- 
-     <div   style="width:250px;
-            position:absolute;
-            right:150px;" class=" float-child sort">
-
-    <div  class="collection-sort filter">
-      <label>Filter by:</label>
-      <select class="dropsize">
-        <option value="/">All </option>
-      </select>
+        
     </div>
-
-    <div class="collection-sort sort">
-      <label>Sort by:</label>
-      <select class="dropsize">
-        <option value="/">Featured</option>
-      </select>
-    </div>
-    </div>
-  </div>
-  
-    </div>
- 
+    
 </div>
-
 
 <div class="container m-5">
     <table class="table table-hover">
@@ -53,26 +23,11 @@
     </thead>
     <tbody>
         {{#each productList}}
-        <section class="products">
-         <div class="product-card">
-
-        <tr class="clickable-row" id="{{this._id}}" data-href="/product/{{this._id}}">
-         
-    <div class="product-image">
-            <td>{{this.image}}</td>
-    </div>
-
-            <div class="product-info">
-<td><h5><a href="/product/{{this._id}}">{{this.productName}}</a></h5></td>
-   <td><h6>{{this.price}}</h6></td>   
-    </div>  
-   
-               
-           
+        <tr class="clickable-row" id="{{this._id}}" data-href="productdetails/{{this._id}}">
+            <td><a href="productdetails/{{this._id}}">{{this.productName}}</a></td>
+            <td>{{this.price}}</td>
+            <td><img src={{this.image}} /></td>
         </tr>
-         </div> 
-         </section>
-
         {{/each}}
     </tbody>
 </table>
@@ -80,5 +35,3 @@
 <div class="container m-5" id="no-result" hidden="">
     <p><span class="fa fa-exclamation-circle">&#0160;</span>No results found</p>
 </div>
-
-</section>
