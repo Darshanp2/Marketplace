@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,27 +11,16 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="/public/js/productList.js"></script>
   <div class="header">
-    <img class="mainimage" src="../../public/assets/logo.jpg" alt="MarketPlaceLogo" />
+    <img src="../../public/assets/logo.jpg" alt="MarketPlaceLogo" />
     <h1>MarketPlace</h1>
 </head>
-</div>
-{{#if user}}
-<div class="dropdown">
-  <button>Other Options</button>
-  <div class="dropdown-content">
-    <a href="/user/updateProfile">Update Profile</a>
-    <a href="/user/orderHistory">Order History</a>
-    <a href="/logout">logout</a>
-  </div>
-</div>
-{{/if}}
 
 <body>
   <div class="main">
     {{{body}}}
   </div>
-  {{!-- Ignore this sign up now. Have to work on it --}}
-  {{!-- <div>
+  {{!-- Ignore this sign up now. Have to work on it  --}}
+  {{!-- <div> 
     <a class="nav-link  " href="/user/signup">Sign UP</a>
   </div>
   <br> --}}
@@ -49,5 +37,4 @@
     integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
     crossorigin="anonymous"></script>
 </body>
-
 </html>
