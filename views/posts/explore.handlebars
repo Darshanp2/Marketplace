@@ -1,87 +1,84 @@
-<section class="vh-100" style="background-color: #eee;">
+<section  class="vh-100"  style="background-color: #eee;" >
 
-  <div class="product-filter">
+<div class="product-filter">
+    
+<div class="container m-5">
 
-    <div class="container m-5">
+  <h1>List of Products</h1>
+     <div class="float-container">
 
-      <h1>List of Products</h1>
-      <div class="float-container">
-
-        <div class="float-child">
-          <div class="">
+   <div class="float-child">
+        <div class="">
             <label for="myInput"></label>
             <input style=" display:inline-block;
-   width:100%" height="48" type="text" class="form-control" id="myInput" onkeyup="fName('myInput',0)"
-              placeholder="Search Product Name">
-          </div>
-
-
+   width:100%" height="48" type="text" class="form-control" id="myInput" onkeyup="fName('myInput',0)" placeholder="Search Product Name">
         </div>
+   
 
-        <div style="width:250px;
+ </div>
+ 
+     <div   style="width:250px;
             position:absolute;
             right:150px;" class=" float-child sort">
 
-          <div class="collection-sort filter">
-            <label>Filter by:</label>
-            <select class="dropsize">
-              <option value="/">All </option>
-            </select>
-          </div>
-
-          <div class="collection-sort sort">
-            <label>Sort by:</label>
-            <select class="dropsize">
-              <option value="/">Featured</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
+    <div  class="collection-sort filter">
+      <label>Filter by:</label>
+      <select class="dropsize">
+        <option value="/">All </option>
+      </select>
     </div>
 
+    <div class="collection-sort sort">
+      <label>Sort by:</label>
+      <select class="dropsize">
+        <option value="/">Featured</option>
+      </select>
+    </div>
+    </div>
   </div>
+  
+    </div>
+ 
+</div>
 
 
-  <div class="container m-5">
+<div class="container m-5">
     <table class="table table-hover">
-      <thead class="thead-light">
+    <thead class="thead-light">
         <tr>
-          <th scope="col">Product Name</th>
-          <th scope="col">Product Price</th>
-          <th scope="col">Product Image</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Product Image</th>
         </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
         {{#each productList}}
         <section class="products">
-          <div class="product-card">
+         <div class="product-card">
 
-            <tr class="clickable-row" id="{{this._id}}" data-href="/product/{{this._id}}">
+        <tr class="clickable-row" id="{{this._id}}" data-href="/product/{{this._id}}">
+         
+    <div class="product-image">
+            <td>{{this.image}}</td>
+    </div>
 
-              <div class="product-image">
-                <td>{{this.image}}</td>
-              </div>
-
-              <div class="product-info">
-                <td>
-                  <h5><a href="/product/{{this._id}}">{{this.productName}}</a></h5>
-                </td>
-                <td>
-                  <h6>{{this.price}}</h6>
-                </td>
-                <button onclick="location.href= '/cart/addToCart/{{this._id}}'">Add To Cart</button>
-              </div>
-            </tr>
-          </div>
-        </section>
+            <div class="product-info">
+<td><h5><a href="/product/{{this._id}}">{{this.productName}}</a></h5></td>
+   <td><h6>{{this.price}}</h6></td>   
+    </div>  
+   
+               
+           
+        </tr>
+         </div> 
+         </section>
 
         {{/each}}
-      </tbody>
-    </table>
-  </div>
-  <div class="container m-5" id="no-result" hidden="">
+    </tbody>
+</table>
+</div>
+<div class="container m-5" id="no-result" hidden="">
     <p><span class="fa fa-exclamation-circle">&#0160;</span>No results found</p>
-  </div>
+</div>
 
 </section>

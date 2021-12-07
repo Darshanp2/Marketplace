@@ -21,6 +21,7 @@ router.post("/updateProfile", async (req, res) => {
   try {
     let input = req.body;
     let { Name, Email, password, Address, phone } = input;
+    let id = "61a7ea01a7e4d0fd6a34d230";
     let updateUser = await userData.updateProfile(
       Name,
       Email,
