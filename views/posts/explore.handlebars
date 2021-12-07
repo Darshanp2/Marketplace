@@ -3,11 +3,9 @@
   <div class="product-filter">
 
     <div class="container m-5">
-
       <h1>Search Here:</h1>
 
       <div class="float-container">
-
         <div class="float-child">
           <div class="">
             <label for="myInput"></label>
@@ -17,15 +15,12 @@
         </div>
 
         <div style="width:250px;
-            position:absolute;
-            right:150px;" class=" float-child sort">
           <div class="collection-sort filter">
             <label>Filter by:</label>
             <select class="dropsize">
               <option value="/">All </option>
             </select>
           </div>
-
           <div class="collection-sort sort">
             <label>Sort by:</label>
               <select class="dropsize">
@@ -50,7 +45,7 @@
       </thead>
       <tbody>
         {{#each productList}}
-        <section class="products">
+        <tr class="clickable-row" id="{{this._id}}" data-href="productdetails/{{this._id}}">
           <div class="product-card">
             <tr class="clickable-row" id="{{this._id}}" data-href="productdetails/{{this._id}}">
               <div class="product-info">
@@ -77,4 +72,3 @@
   <div class="container m-5" id="no-result" hidden="">
     <p><span class="fa fa-exclamation-circle">&#0160;</span>No results found</p>
   </div>
-</section>

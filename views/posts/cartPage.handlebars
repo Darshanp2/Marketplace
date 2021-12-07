@@ -1,0 +1,7 @@
+{{#each products}}
+    <td><h4>{{this.name}}</h4></td>
+    <td><h4>{{this.price}}</h4></td>
+    <button onclick="location.href='/cart/removeProduct/{{this._id}}'">remove</button>
+{{/each}}
+
+<h2>{{totalPrice}}</h2>

@@ -29,7 +29,7 @@ function removeObjectFromId(obj) {
 async function updateProfile(name, email, Password, address, phone, id) {
   let objectID = ObjectId(id);
   const userCollection = await user();
-  console.log(name + " " + email + " " + Password + " " + address);
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
   const updatedInfo = await userCollection.updateOne(
     { _id: objectID },
     {
@@ -38,7 +38,7 @@ async function updateProfile(name, email, Password, address, phone, id) {
         address: address,
         phoneNumber: phone,
         email: email,
-        password: Password,
+        password: hashedPassword,
       },
     }
   );

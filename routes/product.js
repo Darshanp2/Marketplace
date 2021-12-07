@@ -1,7 +1,21 @@
+const mongoCollections = require('../config/mongoCollections');
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const productData = data.product;
+const multer = require("multer");
+const product = mongoCollections.product;
+const { ObjectId } = require('bson');
+
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "--" + file.originalname);
+  },
+});
+const upload = multer({ storage: fileStorageEngine });
 
 router.get('/productdetails/:id', async(req, res) => {
     if (!req.params.id) {
@@ -65,8 +79,13 @@ router.get('/delete/:id',async (req,res) => {
 
 router.get('/advertisement', async (req, res) => {
     try{ 
-      console.log(req.session.userId)
+      if(req.session.user){
       res.render('posts/advertisement', { title: 'Post' });
+
+      }
+      else{
+        res.render('posts/landingpage',{error: 'You need to login first'})
+      }
       return;
     }
     catch (e) {
@@ -74,20 +93,21 @@ router.get('/advertisement', async (req, res) => {
     }
   });
   
-  router.post('/advertisement', async (req, res) => {
+  router.post('/advertisement/upload', upload.single("productImg"), async (req, res) => {
     try{
       const params = req.body;
+      let imagex = "../../"+ req.file.path;
       
-      if(!params)
-      {
-        res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Input not provided',title: 'Post'});
-        return
-      }
-      if(!params.productName || !params.productName.trim())
-      {
-        res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product Name not provided',title: 'Post'});
-        return
-      }
+      // if(!params)
+      // {
+      //   res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Input not provided',title: 'Post'});
+      //   return
+      // }
+      // if(!params.productName || !params.productName.trim())
+      // {
+      //   res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product Name not provided',title: 'Post'});
+      //   return
+      // }
     //   let checkname = parseInt(params.name);
     //   let checkDescription = parseInt(params.description);
     //   console.log(checkname);
@@ -101,27 +121,32 @@ router.get('/advertisement', async (req, res) => {
       // {
       //   const flagForname = 1;
       // }
-      if(!params.description || !params.description.trim())
-      {
-        res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product Description not provided',title: 'Post'});
-        return
-      }
-      if(!params.price)
-      {
-        res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product price not provided',title: 'Post'});
-        return
-      } 
+      // if(!params.description || !params.description.trim())
+      // {
+      //   res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product Description not provided',title: 'Post'});
+      //   return
+      // }
+      // if(!params.price)
+      // {
+      //   res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product price not provided',title: 'Post'});
+      //   return
+      // } 
       // if(flagForname===0)
       // {
       //   res.status(400).render('product/advertisement', {hasErrors: true,error: 'Integer provided',title: 'Post'});
       //   return
       // } 
       const { productName, description, price} = params;
-      let newProduct = await productData.create( productName, description, price);
-        if (newProduct.insertInfo == true) {
-          res.redirect(`/`);
+      if(req.session.user){
+        console.log('111')
+        let userID=req.session.user
+        console.log(userID)
+
+      
+        let newProduct = await productData.create( productName, description, price, imagex,userID);
+          res.render("posts/landingpage");
           return;
-        }
+      }
         else{
           res.status(400).render('posts/landingpage', {title: "Product Posted"});
           return;
@@ -152,8 +177,13 @@ router.get('/advertisement', async (req, res) => {
   
   router.get('/exploreproduct', async (req,res) => {
       try{
+        if(req.session.user){
         let productList = await productData.getAll();
         res.render('posts/explore', { title: 'Explore',partial: 'products-list-script', productList: productList});
+        }
+        else{
+          res.render('posts/landingpage',{error: 'You need to login first'})
+        }
       }
       catch(e){
         res.status(e[0]).json({ error: e[1] });
