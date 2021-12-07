@@ -33,7 +33,6 @@ router.get('/productdetails/:id', async(req, res) => {
 
     // }
     try {
-      console.log(req.session.userId)
         const prod = await productData.getProduct(req.params.id);
         let comments=prod.comments
         
@@ -57,20 +56,17 @@ router.post('/:id', async(req, res) => {
     }
     try {
         //const { username, password } = usersData;
-        const newcomment = await productData.createcomment(req.params.id, req.body.phrase);
-        if (newcomment) {
-            return res.redirect(`/productdetails/${req.params.id}`);
-        }
+        const newcomment = await productData.createcomment(req.params.id, req.body.phrase,req.session.user);
+          res.redirect(`/product/productdetails/${req.params.id}`);
     } catch (e) {
-        console.log(e)
-        res.status(e.error2 || 500).render('post/product')
+       res.redirect(`/product/productdetails/${req.params.id}`);
     }
 });
 
 router.get('/delete/:id',async (req,res) => {
     let id = req.params.id;
     const removeProduct = await productData.deleteProduct(id)
-    let userID = req.session.userID
+    let userID = req.session.user
     if(removeProduct){
         res.redirect('/user/updateProfile')
     }
@@ -97,52 +93,9 @@ router.get('/advertisement', async (req, res) => {
     try{
       const params = req.body;
       let imagex = "../../"+ req.file.path;
-      
-      // if(!params)
-      // {
-      //   res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Input not provided',title: 'Post'});
-      //   return
-      // }
-      // if(!params.productName || !params.productName.trim())
-      // {
-      //   res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product Name not provided',title: 'Post'});
-      //   return
-      // }
-    //   let checkname = parseInt(params.name);
-    //   let checkDescription = parseInt(params.description);
-    //   console.log(checkname);
-    //   console.log(checkDescription);
-    //   console.log(typeof checkname);
-    //   console.log(typeof checkDescription);
-    //   console.log(isNaN(checkname));
-    //   console.log(isNaN(checkDescription));
-  
-      // if(isNaN(checkname))
-      // {
-      //   const flagForname = 1;
-      // }
-      // if(!params.description || !params.description.trim())
-      // {
-      //   res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product Description not provided',title: 'Post'});
-      //   return
-      // }
-      // if(!params.price)
-      // {
-      //   res.status(400).render('posts/advertisement', {hasErrors: true,error: 'Product price not provided',title: 'Post'});
-      //   return
-      // } 
-      // if(flagForname===0)
-      // {
-      //   res.status(400).render('product/advertisement', {hasErrors: true,error: 'Integer provided',title: 'Post'});
-      //   return
-      // } 
       const { productName, description, price} = params;
       if(req.session.user){
-        console.log('111')
         let userID=req.session.user
-        console.log(userID)
-
-      
         let newProduct = await productData.create( productName, description, price, imagex,userID);
           res.render("posts/landingpage");
           return;

@@ -37,13 +37,6 @@ async function create(productName, description,price,img,sellerID) {
     const insertInfo = await productCollection.insertOne(newProduct);
     const newId = insertInfo.insertedId;
     const productList = await this.get(newId);
-    // const userCollection = await user();
-    // const userModel = await userCollection.findOne({ _id: req.session.user._id });
-    // console.log(req.session.user._id)
-    // const productCollection = await product();
-    // const proModel = await userCollection.findOne({ productName: productName });
-    // console.log(proModel._id)
-    // const z = await productCollection.updateOne({_id: proModel._id},{$addToSet:{sellerID: userModel._id}});
     productList["_id"] = productList["_id"].toString();
     return productList;
 
@@ -73,33 +66,20 @@ async  function getAll(){
     return productList;
 }
 
-async function createcomment(productId,comment){
-
-    // if(typeof comment !=='string'){
-    //     throw 'Error: The input is not a string'
-    // }
-
+async function createcomment(productId,comment,userid){
+    let result = true
     const productsCollection = await product();
+    const userCol = await user()
+    let userModel = await userCol.findOne({_id : ObjectId(userid)})
     let objid=  ObjectId(productId)
-    
+    comment = userModel.name + "  :  " + comment
     let newcomment={ 
-        username: 'username',
         comment:comment
     }
-
     const z = await productsCollection.updateOne({_id:objid},{$addToSet:{comments: newcomment}});
     let userInserted=true
-
-    if (z.insertedCount === 0){
-        userInserted=false;
-        throw 'Insert failed!';
-    }
-    let prod= await productsCollection.findOne({ _id: objid });
-    
-    if (prod === null){ 
-        throw 'Error: No product with that id create comment';
-    } 
-    return true
+    if (z.insertedCount === 0) result = false
+    return result
 }
 
 module.exports = {

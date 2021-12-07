@@ -5,6 +5,7 @@ const userData = data.user;
 
 router.get("/updateProfile", async (req, res) => {
   try {
+    let id = req.session.user
     const result = await userData.getUser(id);
     //sconsole.log(result.products)
     res.render("posts/updateprofile", {
@@ -47,9 +48,7 @@ router.post("/updateProfile", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     if (req.session.user) {
-      console.log(req.session.user)
       res.render("posts/landingpage" ,{user:req.session.user});
-      return;
     } else {
       res.render("posts/landingpage");
     }
@@ -114,7 +113,7 @@ router.get("/private", async (req, res) => {
   const email = req.body.email;
   const name = req.body.name;
 
-  if (!req.session.userId) {
+  if (!req.session.user) {
     res.redirect("/");
     return;
   }
