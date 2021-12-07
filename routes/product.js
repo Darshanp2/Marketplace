@@ -7,13 +7,11 @@ router.get('/productdetails/:id', async(req, res) => {
     if (!req.params.id) {
         res.status(404).json({ error: ' No input' });
         return;
-
     }
 
     if (typeof req.params.id !== 'string' || !req.params.id.replace(/\s/g, '').length) {
         res.status(400).json({ error: 'Input is not a string or is an empty string' });
         return;
-
     }
     // if (ObjectId.isValid(req.params.id) != true) {
     //     res.status(400).json({ error: 'Input is not a valid ObjectId' });
@@ -47,7 +45,7 @@ router.post('/:id', async(req, res) => {
         //const { username, password } = usersData;
         const newcomment = await productData.createcomment(req.params.id, req.body.phrase);
         if (newcomment) {
-            return res.redirect(`/product/${req.params.id}`);
+            return res.redirect(`/productdetails/${req.params.id}`);
         }
     } catch (e) {
         console.log(e)
