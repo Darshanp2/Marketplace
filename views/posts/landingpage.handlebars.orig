@@ -10,26 +10,23 @@ the product
     </dd>
 </dl>
 
-
-<form action="product/exploreproduct" method="get">
+<a href="/user/signup">Sign Up</a>
+<<<<<<< HEAD
+<form action="/product/exploreproduct" method="get">
 <input type="submit" value="Explore Products" />
 </form>
-<form action="product/advertisement" method="get">
+<form action="/product/advertisement" method="get">
 <input type="submit" value="Post an advertisement" />
 </form>
-<p>{{error}}</p>
 </div>
-
-{{#if user}}
-<p><a href="/logout"  id="Log-out" >Log Out</a></p>
-{{else}}
-<div id="form"  >
+<div>
 
 <h2>Login here</h2>
+</div>
 
-<div class="form-elem" >
-  <form method="POST" id="login-form" action="/login" >
-    
+
+  <form method="POST" id="login-form" action="/login">
+    <div class="form-elem">
       <label for="email">email.:</label>
       <input
         name="email"
@@ -38,7 +35,8 @@ the product
         value="{{email}}"
         placeholder="email"
       />
-    
+    </div>
+    <div class="form-elem">
       <label for="password">Password:</label>
       <input
         name="password"
@@ -48,17 +46,20 @@ the product
       />
     </div>
     <button type="submit">Login</button>
-    <a href="/signup" class="carrd-link">Need to register? Click here to sign-up</a>
   </form>
 </div>
-{{!-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-        crossorigin="anonymous"></script> --}}
- 
- {{/if}}
- 
- 
- 
- 
+ </div>
+     </form>
+        <a href="/signup" class="carrd-link">Need to register? Click here to sign-up</a>
+    </div>
+=======
+<a href="/user/login">Login</a>
+<form action="/exploreproduct" method="get">
+<button type="button">Explore Product</button>
+</form>
+<form action="/advertisement" method="get">
+<button type="button">Post an advertisement</button>
+</form>
 
-        
-  
+>>>>>>> 2c39f52365e31dab5a0ad74d01f6bf761a350e7f
+</div>
