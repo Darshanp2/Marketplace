@@ -5,7 +5,6 @@ const userData = data.user;
 
 router.get("/updateProfile", async (req, res) => {
   try {
-    let id = "61a7ea01a7e4d0fd6a34d230";
     const result = await userData.getUser(id);
     //sconsole.log(result.products)
     res.render("posts/updateprofile", {
@@ -17,11 +16,20 @@ router.get("/updateProfile", async (req, res) => {
     res.json(e);
   }
 });
+// router.post("/", async (req, res) => {
+  
+//   try{
+//       res.redirect("/");
+//     }
+//   catch (e) {
+//     res.status(500).json({ error: e });
+//   }
+// }),
 router.post("/updateProfile", async (req, res) => {
   try {
     let input = req.body;
     let { Name, Email, password, Address, phone } = input;
-    let id = "61a7ea01a7e4d0fd6a34d230";
+  
     let updateUser = await userData.updateProfile(
       Name,
       Email,
@@ -38,9 +46,9 @@ router.post("/updateProfile", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    if (req.session.userId) {
-      res.render("posts/landingpage");
-  
+    if (req.session.user) {
+      console.log(req.session.user)
+      res.render("posts/landingpage" ,{user:req.session.user});
       return;
     } else {
       res.render("posts/landingpage");
@@ -54,7 +62,7 @@ router.get("/", async (req, res) => {
 
 router.get("/signup", async (req, res) => {
   try {
-    if (req.session.userId) {
+    if (req.session.user) {
       res.status(200).redirect("/private");
     }
     res.status(200).render("posts/signup", {
@@ -131,8 +139,7 @@ router.post("/login", async (req, res) => {
   try {
     let newUser1 = await userData.checkUser(email, password);
     if (newUser1.authenticated == true) {
-      req.session.userId = newUser1.userId;
-      console.log(req.session.userId)
+      req.session.user = newUser1.userId;
       res.redirect("/");
     } else {
       res.status(401).render("posts/landingpage", {
@@ -156,7 +163,7 @@ router.get("/logout", async (req, res) => {
   res.clearCookie("AuthCookie");
   res.clearCookie("Build Session");
   req.session.destroy();
-  res.render("posts/logout");
+  res.render("posts/landingpage");
 });
 
 module.exports = router;
