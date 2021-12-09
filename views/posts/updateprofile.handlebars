@@ -1,0 +1,17 @@
+<form action="/user/updateProfile" method="post">
+    <input type="text" name="Name" id="Name" placeholder={{user.name}}>
+    <input type="email" name="Email" id="Email" placeholder={{user.email}}>
+    <input type="password" name="password" id="password" placeholder="Enter new password">
+    <input type="text" name="Address" id="Address" placeholder={{user.address}}>
+    <input type="number" name="phone" id="phone" placeholder={{user.phoneNumber}}>
+    <input type="submit" value="Update">
+</form>
+<ul>
+    {{#each products}}
+        <li>{{this.name}}</li>
+        <li>{{this.price}}</li>
+        <a href="/product/updateProduct/{{this._id}}">edit</a>   <a href="/product/deleteProduct/{{this._id}}">delete</a>
+        {{/each}}
+</ul>
+
+
