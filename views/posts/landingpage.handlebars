@@ -40,7 +40,7 @@
         sell it. You can do it for free now!</p>
       <form action="/product/advertisement" method="get">
         <input type="submit" value="Post an advertisement" />
-        {{#if error}}
+        {{#if error1}}
     <div class="login-error">
         <p>{{error1}}</p>
     </div>
@@ -79,7 +79,13 @@
             placeholder="Enter your Email Address!" required><br><br>
           <label for="password">Password:</label>
           <input name="password" id="password" type="password" placeholder="Enter your Password" required>
+         
           <br>
+          {{#if error}}
+    <div class="login-error">
+        <p>{{error}}</p>
+    </div>
+{{/if}}
           <br>
           {{!-- Find replacement for &nbsp --}}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
