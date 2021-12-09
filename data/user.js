@@ -29,6 +29,39 @@ function removeObjectFromId(obj) {
 async function updateProfile(name, email, Password, address, phone, id) {
   let objectID = ObjectId(id);
   const userCollection = await user();
+  email = email.toString().toLowerCase();
+  password = password.toString();
+  for (let i of email) {
+    if (i == " ") throw `email has empty spaces`;
+  }
+  let check0 = phone;
+  let result = check0.slice(0, 1);
+  if (result == 0) {
+    throw `first digit is 0`;
+  }
+  for (let i of password) if (i == " ") throw `password has empty spaces`;
+  const phoneNoCheck = /^\(?([0-9]{3})\)?[-]?([0-9]{3})[-]?([0-9]{4})$/;
+  const phoneCheck = phoneNoCheck.test(phone);
+  if (phoneCheck == false) throw "Wrong Phone no. format";
+
+  if (email && name && password) {
+    if (password.length < 6) throw `Password has less than 6 characters `;
+  }
+  if (name.length < 4) {
+    throw `Name has less than 4 characters`;
+  }
+
+  let nameCheck = /(?:[\w\s][^!@#$%^&*()?//><,.;:'"\{\}\[\]=+~`\-_|\\0-9]+)/;
+  if (!name.match(nameCheck)) {
+    throw `Name is not a valid input`;
+  }
+
+  let emailCheck = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  // /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+  if (!email.match(emailCheck)) {
+    throw `Email is not valid `;
+  }
+
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   const updatedInfo = await userCollection.updateOne(
     { _id: objectID },
@@ -47,13 +80,44 @@ async function updateProfile(name, email, Password, address, phone, id) {
 }
 
 async function createUser(name, address, phoneNumber, email, password) {
-    console.log("inside CreateUSer");
+  console.log("inside CreateUSer");
+  email = email.toString().toLowerCase();
+  password = password.toString();
+  console.log("inside CreateUSer");
   for (let i of email) {
     if (i == " ") throw `email has empty spaces`;
   }
+  let check0 = phoneNumber;
+  let result = check0.slice(0, 1);
+  if (result == 0) {
+    throw `first digit is 0`;
+  }
+
   for (let i of password) if (i == " ") throw `password has empty spaces`;
+  const phoneNoCheck = /^\(?([0-9]{3})\)?[-]?([0-9]{3})[-]?([0-9]{4})$/;
+  const phoneCheck = phoneNoCheck.test(phoneNumber);
+  if (phoneCheck == false) throw "Wrong Phone no. format";
+
+  if (email && name && password) {
+    if (password.length < 6) throw `Password has less than 6 characters `;
+  }
+  if (name.length < 4) {
+    throw `Name has less than 4 characters`;
+  }
+
+  let nameCheck = /(?:[\w\s][^!@#$%^&*()?//><,.;:'"\{\}\[\]=+~`\-_|\\0-9]+)/;
+  if (!name.match(nameCheck)) {
+    throw `Name is not a valid input`;
+  }
+
+  let emailCheck = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  ///(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+  if (!email.match(emailCheck)) {
+    throw `Email is not valid `;
+  }
+
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-console.log("inside create user")
+  console.log("inside create user");
   if (await emailExists(email)) {
     return "email already taken";
   }

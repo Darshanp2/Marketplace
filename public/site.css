@@ -1,4 +1,4 @@
-.header img {
+.mainimage {
   float: left;
   width: 100px;
   height: 100px;
@@ -44,6 +44,16 @@ label {
   background: #0a0a0a;
 }
 
+.signup h2 {
+  text-align: center;
+  padding: 25px;
+  color: white;
+}
+
+.forcenter{
+  text-align: center;
+}
+
 thead {
   display: table-header-group;
   vertical-align: middle;
@@ -74,16 +84,25 @@ textarea {
   float: center;
 }
 
+.productadvertisement{
+  
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .products {
   display: flex;
   flex-wrap: wrap;
 }
 
+.alignforsignup{
+  text-align: center;
+}
 .product-card {
   padding: 2%;
   flex-grow: 1;
   flex-basis: 16%;
-
   display: flex;
 }
 
@@ -159,4 +178,28 @@ textarea {
 }
 .mainhead{
   padding: 10px 10px;
+}
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  display: block;
+  color: #000000;
+  padding: 5px;
+  text-decoration: none;
+}
+.dropdown-content a:hover {
+  color: #FFFFFF;
+  background-color: #00A4BD;
 }

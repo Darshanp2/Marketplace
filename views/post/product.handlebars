@@ -1,36 +1,32 @@
 <div> 
     <br>
     <br>
-    <table class="table table-hover">
-      <h1>&nbsp;&nbsp;Product Details:</h1>
-      <thead class="thead-light">
-        <tr>
-          <th scope="col" style="font-size:26px;">Product Image</th>
-          <th scope="col" style="font-size:26px;">Product Description</th>
-          {{!-- <th scope="col">Product Price</th> --}}
-        </tr>
-      </thead>
-      <tbody>
-        {{#each productList}}
-        <section class="products">
-          <div class="product-card">
-            <tr class="clickable-row" id="{{this._id}}" data-href="productdetails/{{this._id}}">
-              <div class="product-info">
-                <div class="product-image">
-                  <td style="width:30%"><img src= {{this.image}}/></td>
-                </div>
-                <td style="width:70%">
-                  <h5><a href="productdetails/{{this._id}}"> {{this.productName}}</a></h5>
-                  <h6>{{this.productCategory}}</h6>
-                  <h6>{{this.price}}</h6>
-                </td>   
-              </div>
-            </tr>
+ <table class="table table-hover">
+    <h1>&nbsp;&nbsp;Product Details:</h1>
+    <thead class="thead-light">
+      <tr>
+        <th scope="col" style="font-size:26px;">Product Image</th>
+        <th scope="col" style="font-size:26px;">Product Description</th>
+        {{!-- <th scope="col">Product Price</th> --}}
+      </tr>
+    </thead>
+    <tbody>
+      <div class="product-info">
+        <div class="product-image">
+          <div>
+            <img src={{prod.image}} />
+            <h1>{{prod.productName}}</h1>
+            <p>{{prod.description}}</p>
+            <h2>Price: {{prod.price}}</h2>
           </div>
-        </section>
-        {{/each}}
-      </tbody>
-    </table>
+          <td style="width:70%">
+            <h5><a href="productdetails/{{this._id}}"> {{this.productName}}</a></h5>
+            <h6>{{this.productCategory}}</h6>
+            <h6>{{this.price}}</h6>
+          </td>
+        </div>
+    </tbody>
+  </table>
 
     <table class="table table-hover">
       <thead class="thead-light"></thead>
