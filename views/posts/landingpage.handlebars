@@ -45,45 +45,65 @@
   <div class="col-sm-4">
     <div class="forcenter">
       {{!-- Find whether u is allowed? --}}
-      <img src="../../public/assets/login.jpg" alt="MarketPlaceLogo" width="250" height="260" />
-      <div class="col-sm-4">
-      {{#if user}}
-          <br><br><br><br>
-          <h3 style="color:red;">// Add one image here</h3>
-          <h2> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Personal Info Changed?</h2>
-          <br>
-            <p>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              {{!--Add Image --}}
-              You can update you personal information here
-            </p>
-            <form action="/user/updateProfile" method="get">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="submit" value="Update Profile" />
-            </form>
-          <br>
-        </div>
-      {{else}}
-      <h2><u>Login here:</u></h2>
-      <form method="POST" id="login-form" action="/login">
-        <div class="form-elem">
-          <label for="email">Email:</label>
-          <input name="email" id="email" type="text" value="{{email}}"
-            placeholder="Enter your Email Address!" /><br><br>
-          <label for="password">Password:</label>
-          <input name="password" id="password" type="password" placeholder="Enter your Password" />
-          <br>
-          <br>
-          {{!-- Find replacement for &nbsp --}}
+        {{#if user}}
+        <div id="update-profile" class="col-sm-4">
+        <br><br><br><br>
+        <h3 style="color:red;">// Add one image here</h3>
+        <h2> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Personal Info Changed?</h2>
+        <br>
+        <p>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button type="submit">Login</button>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="/" class="carrd-link"> Forget Password?</a>
-          <br>
-          <br>
-          <h5>New Here?</h5><a href="/signup" class="carrd-link">Click here to Sign-up</a>
+          {{!--Add Image --}}
+          You can update you personal information here
+        </p>
+        <form action="/user/updateProfile" method="get">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="submit" value="Update Profile" />
+        </form>
+        <br>
         </div>
-      </form>
+      </div>
+        {{else}}
+        <div id="login-div">
+        <img src="../../public/assets/login.jpg" alt="MarketPlaceLogo" width="250" height="260" />
+        <h2><u>Login here:</u></h2>
+        <form method="POST" id="login-form" action="/login">
+          <div class="form-elem">
+            <label for="email">Email:</label>
+            <input name="email" id="email" type="text" value="{{email}}"
+              placeholder="Enter your Email Address!" /><br><br>
+            <label for="password">Password:</label>
+            <input name="password" id="password" type="password" placeholder="Enter your Password" />
+            <br>
+            <br>
+            {{!-- Find replacement for &nbsp --}}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" id="login-sumbmit" value="Login"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/" class="carrd-link"> Forget Password?</a>
+            <br>
+            <br>
+            <h5>New Here?</h5><a href="/signup" class="carrd-link">Click here to Sign-up</a>
+            <span id="login-error" hidden>invalid email or password</span>
+          </div>
+        </form>
+      </div>
+      <div id="update-profile-2" class="col-sm-4" style="display: none">
+        <br><br><br><br>
+        <h3 style="color:red;">// Add one image here</h3>
+        <h2> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Personal Info Changed?</h2>
+        <br>
+        <p>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {{!--Add Image --}}
+          You can update you personal information here
+        </p>
+        <form action="/user/updateProfile" method="get">
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="submit" value="Update Profile" />
+        </form>
+        <br>
+      </div>
     </div>
   </div>
 </div>
