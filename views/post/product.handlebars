@@ -24,6 +24,9 @@
             <h6>{{this.productCategory}}</h6>
             <h6>{{this.price}}</h6>
           </td>
+          <form action="/cart/addToCart/{{prod._id}}" method="get">
+            <input type="submit" value="Add to cart">
+          </form>
         </div>
     </tbody>
   </table>
@@ -36,7 +39,7 @@
             <form  action="/product/{{prod._id}}" id="staticForm" method="post">
               <label  class="lol" for="palstr">Enter your comment below</label>
               <br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea  id="comm" name="phrase" placeholder="Your views!"  class='full-width-input'></textarea>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea  id="comm" name="phrase" placeholder="Your views!"  class='full-width-input' required></textarea>
                 {{#if error}}
                 <p>{{error}}</p>
                 {{/if}}

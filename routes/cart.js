@@ -18,7 +18,7 @@ router.get("/addToCart/:id", async (req,res) =>{
     let userId = req.session.user
     let prodId = req.params.id
     const addedToCart = await cartData.addToCart(userId,prodId)
-    res.redirect("/explore")
+    res.redirect("/product/exploreproduct")
 })
 
 router.get("/removeProduct/:id", async (req,res) =>{
@@ -29,9 +29,16 @@ router.get("/removeProduct/:id", async (req,res) =>{
 })
 
 router.post("/purchase",async (req,res) =>{
-
+    let userId = req.session.user
+    let order = await cartData.placeOrder(userId)
+    res.redirect("/")
 })
 
+router.get("/orderHistory", async (req,res) =>{
+    let userId = req.session.user
+    let orders = await fetchOrders(userId)
+    res.render('posts/orderHistory',{orders:orders})
+})
 
 
 
