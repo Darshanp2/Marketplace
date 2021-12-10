@@ -26,57 +26,128 @@ function removeObjectFromId(obj) {
   return obj;
 }
 
-async function updateProfile(name, email, Password, address, phone, id) {
-  let objectID = ObjectId(id);
+async function updateName(id, newName) {
+  if (newName && newName.length < 6) throw "Name is too short.";
+  let nameCheck = /(?:[\w\s][^!@#$%^&*()?//><,.;:'"\{\}\[\]=+~`\-_|\\0-9]+)/;
+  if (!newName.match(nameCheck)) {
+    throw `Name is not a valid input`;
+  }
+  console.log("inside update name");
+  if (!id || typeof id != "string")
+    throw "Id should be provied and it is a string.";
+  if (id.trim() === "") throw "The input is an empty string.";
+  if (!ObjectId.isValid(id)) throw "Invalid ObjectId.";
+  let parsedId = ObjectId(id);
+  if (!newName || typeof newName != "string" || newName.trim() == "")
+    throw "No first name provided.";
+  const newInfo = newName.trim();
+  if (await nameExists(newName)) {
+    return "same as old name", console.log("same as old name");
+  }
   const userCollection = await user();
+  return await userCollection
+    .updateOne({ _id: parsedId }, { $set: { name: newInfo } })
+    .then(async function () {
+      return await module.exports.getUser(id);
+    });
+}
+async function updateAddress(id, address) {
+  console.log("inside update address");
+  if (!id || typeof id != "string")
+    throw "Id should be provied and it is a string.";
+  if (id.trim() === "") throw "The input is an empty string.";
+  if (!ObjectId.isValid(id)) throw "Invalid ObjectId.";
+  let parsedId = ObjectId(id);
+  if (!address || typeof address != "string" || address.trim() == "")
+    throw "No first address provided.";
+  const newInfo = address.trim();
+
+  const userCollection = await user();
+  return await userCollection
+    .updateOne({ _id: parsedId }, { $set: { address: newInfo } })
+    .then(async function () {
+      return await module.exports.getUser(id);
+    });
+}
+async function updateEmail(id, email) {
+  let emailCheck = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  // /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+  if (!email.match(emailCheck)) {
+    throw `Email is not valid `;
+  }
+  console.log("inside update email");
   email = email.toString().toLowerCase();
   password = password.toString();
   for (let i of email) {
     if (i == " ") throw `email has empty spaces`;
   }
-  let check0 = phone;
+  if (!id || typeof id != "string")
+    throw "Id should be provied and it is a string.";
+  if (id.trim() === "") throw "The input is an empty string.";
+  if (!ObjectId.isValid(id)) throw "Invalid ObjectId.";
+  let parsedId = ObjectId(id);
+  if (!email || typeof email != "string" || email.trim() == "")
+    throw "No first name provided.";
+  const newInfo = email.trim();
+  if (await emailExists(email)) {
+    return "email already exists or same as previous email";
+  }
+
+  const userCollection = await user();
+  return await userCollection
+    .updateOne({ _id: parsedId }, { $set: { email: newInfo } })
+    .then(async function () {
+      return await module.exports.getUser(id);
+    });
+}
+async function updatePhone(id, phoneNumber) {
+  console.log("inside update email");
+  let check0 = phoneNumber;
   let result = check0.slice(0, 1);
   if (result == 0) {
     throw `first digit is 0`;
   }
   for (let i of password) if (i == " ") throw `password has empty spaces`;
   const phoneNoCheck = /^\(?([0-9]{3})\)?[-]?([0-9]{3})[-]?([0-9]{4})$/;
-  const phoneCheck = phoneNoCheck.test(phone);
+  const phoneCheck = phoneNoCheck.test(phoneNumber);
   if (phoneCheck == false) throw "Wrong Phone no. format";
 
-  if (email && name && password) {
-    if (password.length < 6) throw `Password has less than 6 characters `;
-  }
-  if (name.length < 4) {
-    throw `Name has less than 4 characters`;
-  }
+  if (!id || typeof id != "string")
+    throw "Id should be provied and it is a string.";
+  if (id.trim() === "") throw "The input is an empty string.";
+  if (!ObjectId.isValid(id)) throw "Invalid ObjectId.";
+  let parsedId = ObjectId(id);
+  if (!phoneNumber || typeof phoneNumber != "string")
+    throw "No first name provided.";
+  const newInfo = phoneNumber.trim();
 
-  let nameCheck = /(?:[\w\s][^!@#$%^&*()?//><,.;:'"\{\}\[\]=+~`\-_|\\0-9]+)/;
-  if (!name.match(nameCheck)) {
-    throw `Name is not a valid input`;
-  }
+  const userCollection = await user();
+  return await userCollection
+    .updateOne({ _id: parsedId }, { $set: { phoneNumber: newInfo } })
+    .then(async function () {
+      return await module.exports.getUser(id);
+    });
+}
 
-  let emailCheck = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  // /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-  if (!email.match(emailCheck)) {
-    throw `Email is not valid `;
-  }
+async function updatePassword(id, password) {
+  if (!id || typeof id != "string")
+    throw "Id should be provied and it is a string.";
+  if (id.trim() === "") throw "The input is an empty string.";
+  if (!ObjectId.isValid(id)) throw "Invalid ObjectId.";
+  let parsedId = ObjectId(id);
+  if (!password || typeof password != "string" || password.trim() == "")
+    throw "No password provided.";
+  if (password && password.length < 6)
+    throw "Password is too long or too short.";
 
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  const updatedInfo = await userCollection.updateOne(
-    { _id: objectID },
-    {
-      $set: {
-        name: name,
-        address: address,
-        phoneNumber: phone,
-        email: email,
-        password: hashedPassword,
-      },
-    }
-  );
-  if (updatedInfo.modifiedCount === 0) return false;
-  return true;
+  const newInfo = await bcrypt.hash(password.trim(), saltRounds);
+
+  const userCollection = await user();
+  return await userCollection
+    .updateOne({ _id: parsedId }, { $set: { hashedPassword: newInfo } })
+    .then(async function () {
+      return await module.exports.getUser(id);
+    });
 }
 
 async function createUser(name, address, phoneNumber, email, password) {
@@ -146,6 +217,14 @@ async function emailExists(email) {
   return (await loginCollection.findOne({ email: email })) !== null;
 }
 
+async function nameExists(name) {
+  name = name.toLowerCase();
+
+  const loginCollection = await user();
+
+  return (await loginCollection.findOne({ name: name })) !== null;
+}
+
 async function checkUser(email, password) {
   const userCollection = await user();
 
@@ -162,8 +241,13 @@ async function checkUser(email, password) {
   }
 }
 module.exports = {
-  updateProfile,
+  // updateProfile,
   getUser,
   createUser,
   checkUser,
+  updateName,
+  updatePassword,
+  updatePhone,
+  updateAddress,
+  updateEmail,
 };

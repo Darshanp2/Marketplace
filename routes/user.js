@@ -26,7 +26,43 @@ router.get("/updateProfile", async (req, res) => {
 //     res.status(500).json({ error: e });
 //   }
 // }),
+
 router.post("/updateProfile", async (req, res) => {
+  const name = req.body.Name.toString().trim();
+  const address = req.body.Address.toString().trim();
+  const email = req.body.Email.toString().trim();
+  const password = req.body.password.toString().trim();
+  const phone = req.body.phone.toString().trim();
+
+  try {
+    let userInfo = await userData.getUser(req.session.user);
+    if (!userInfo) {
+      res.status(400).render("posts/updateprofile", {
+        error: "User Not found.",
+        signed_in: req.body.signed_in,
+        partial: "editUser",
+      });
+      return;
+    }
+
+    if (name) await userData.updateName(req.session.user, name);
+    if (address) await userData.updateAddress(req.session.user, address);
+    if (email) await userData.updateEmail(req.session.user, email);
+    if (password) await userData.updatePassword(req.session.user, password);
+    if (phone) await userData.updatePhone(req.session.user, phone);
+
+    res.redirect("/updateprofile");
+    return;
+  } catch (e) {
+    res.status(404).render("posts/updateprofile", {
+      error: "User not found.",
+      signed_in: req.body.signed_in,
+      partial: "editUser",
+    });
+    return;
+  }
+});
+/*router.post("/updateProfile", async (req, res) => {
   try {
     let input = req.body;
     let { Name, Email, password, Address, phone } = input;
@@ -37,19 +73,21 @@ router.post("/updateProfile", async (req, res) => {
         error: "first digit of phone number should be non zero",
       });
     }
-    const phoneNoCheck = /^\(?([0-9]{3})\)?[-]?([0-9]{3})[-]?([0-9]{4})$/;
-    const phoneCheck = phoneNoCheck.test(phone);
-    if (phoneCheck == false) {
-      res.status(400).render("posts/updateProfile", {
-        error: "Phone number should be 10 digits",
-      });
-    }
-    /*if (!email || !password) {
+
+    if (!email || !password) {
     res.status(400).render("posts/updateProfile", {
       error: " HTTP 400 Error: Invalid input. All fields must be supplied.",
       partial: "updateProfile",
     });
   }*/
+/* 
+  const phoneNoCheck = /^\(?([0-9]{3})\)?[-]?([0-9]{3})[-]?([0-9]{4})$/;
+    const phoneCheck = phoneNoCheck.test(phone);if (phoneCheck == false) {
+      res.status(400).render("posts/updateProfile", {
+        error: "Phone number should be 10 digits",
+      });
+    }
+   
 
     for (let i of email)
       if (i == " ") {
@@ -103,7 +141,7 @@ router.post("/updateProfile", async (req, res) => {
   } catch (e) {
     res.json(e);
   }
-});
+});*/
 
 router.get("/", async (req, res) => {
   try {
