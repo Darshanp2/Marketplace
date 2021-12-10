@@ -103,14 +103,17 @@ router.post(
   async (req, res) => {
     try {
       const params = req.body;
+      console.log(req.body)
       let imagex = "../../" + req.file.path;
-      const { productName, description, price } = params;
+    
+      const { productName, description,category, price} = params;
       if (req.session.user) {
         let userID = req.session.user;
         let newProduct = await productData.create(
           productName,
           description,
           price,
+          category,
           imagex,
           userID
         );
@@ -158,6 +161,7 @@ router.get("/exploreproduct", async (req, res) => {
   try {
     if (req.session.user) {
       let productList = await productData.getAll();
+      console.log(productList)
       res.render("posts/explore", {
         title: "Explore",
         partial: "products-list-script",

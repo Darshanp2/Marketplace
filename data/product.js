@@ -1,44 +1,47 @@
 const mongoCollections = require("../config/mongoCollections");
 const product = mongoCollections.product;
 const user = mongoCollections.user;
-const { ObjectId } = require("bson");
+const { ObjectId } = require('bson');
 
-async function create(productName, description, price, img, sellerID) {
-  if (!productName) throw [400, "You must provide with all the details"];
-  if (!description) throw [400, "You must provide with all the details"];
-  if (!price) throw [400, "You must provide with all the details"];
+async function create(productName, description,price,category,img,sellerID) {
 
-  if (typeof productName != "string")
-    throw [400, "You must provide string for product Name"];
-  var res = productName.replace(/ /g, "");
-  if (res == 0) throw [400, "Invalid Product Name"];
+    if (!productName) throw [400,"You must provide with all the details"];
+    if (!description) throw[400,"You must provide with all the details"];
+    if (!price) throw[400,"You must provide with all the details"];
 
-  if (typeof description != "string")
-    throw [400, "You must provide string for description"];
-  res = description.replace(/ /g, "");
-  if (res == 0) throw [400, "Invalid Description"];
+    if (typeof productName!='string') throw[400,"You must provide string for product Name"];
+    var res = productName.replace(/ /g, "");
+    if(res==0) throw[400,"Invalid Product Name"];
 
-  if (price < 0) throw [400, "You must provide valid price"];
+    if (typeof description!='string') throw[400,"You must provide string for description"];
+    res = description.replace(/ /g, "");
+    if(res==0) throw[400,"Invalid Description"];
 
-  const usersCollection = await user();
-  const productCollection = await product();
+    if (price < 0) throw[400,"You must provide valid price"];
+    
+    const usersCollection=await user()
+    const productCollection = await product();
 
-  let newProduct = {
-    productName: productName,
-    description: description,
-    image: img,
-    sellerId: sellerID,
-    purchased: false,
-    price: price,
-    comments: [],
+
+
+    let newProduct = {
+        productName: productName,
+        description: description,
+        image: img,
+        sellerId: sellerID,
+        category: category,
+        purchased: false,
+        price: price,
+        comments: []
     activeCarts: []
-  };
+    };
+      
+    const insertInfo = await productCollection.insertOne(newProduct);
+    const newId = insertInfo.insertedId;
+    const productList = await this.get(newId);
+    productList["_id"] = productList["_id"].toString();
+    return productList;
 
-  const insertInfo = await productCollection.insertOne(newProduct);
-  const newId = insertInfo.insertedId;
-  const productList = await this.get(newId);
-  productList["_id"] = productList["_id"].toString();
-  return productList;
 }
 
 async function getProduct(id) {
@@ -59,12 +62,10 @@ async function getProduct(id) {
 
   return products;
 }
-async function getAll() {
-  const productCollection = await product();
-  const productList = await productCollection
-    .find({}, { projection: { productName: 1, image: 1, price: 1 } })
-    .toArray();
-  return productList;
+async  function getAll(){
+    const productCollection = await product();
+    const productList = await productCollection.find({purchased:false}).toArray();
+    return productList;
 }
 
 async function createcomment(productId, comment, userid) {

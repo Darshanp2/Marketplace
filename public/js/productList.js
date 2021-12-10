@@ -41,8 +41,9 @@ function fName(id, col) {
     let c = 0;
     for (i = 0; i < rows.length; i++) {
         row = rows[i];
-        txtValue = row.cells[col].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        txtValue1 = row.cells[1].innerText;
+        txtValue2 = row.cells[2].innerText;
+        if (txtValue1.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1) {
             row.style.display = "";
             c = c + 1;
         } else {
