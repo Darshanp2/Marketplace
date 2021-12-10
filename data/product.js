@@ -3,7 +3,7 @@ const product = mongoCollections.product;
 const user = mongoCollections.user;
 const { ObjectId } = require('bson');
 
-async function create(productName, description,price,img,sellerID) {
+async function create(productName, description,price,category,img,sellerID) {
 
     if (!productName) throw [400,"You must provide with all the details"];
     if (!description) throw[400,"You must provide with all the details"];
@@ -29,6 +29,7 @@ async function create(productName, description,price,img,sellerID) {
         description: description,
         image: img,
         sellerId: sellerID,
+        category: category,
         purchased: false,
         price: price,
         comments: []
@@ -62,7 +63,7 @@ async function getProduct(id) {
 }
 async  function getAll(){
     const productCollection = await product();
-    const productList = await productCollection.find({}, {projection: {productName: 1, image: 1, price: 1}}).toArray();
+    const productList = await productCollection.find({purchased:false}).toArray();
     return productList;
 }
 

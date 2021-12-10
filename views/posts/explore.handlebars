@@ -9,7 +9,7 @@
         <div class="float-child">
           <div class="">
             <input style=" display:inline-block; width:100%" height="48" type="text" class="form-control" id="searchInput"
-              onkeyup="fName('searchInput',1)" placeholder="New things are waiting for you!">
+              onkeyup="fName('searchInput','name')" placeholder="Search Category or Product name">
           </div>
 
           <div class="">
@@ -59,7 +59,7 @@
               <a href="productdetails/{{this._id}}"> {{this.productName}}</a>
             </td>
             <td style="width:20%">
-                {{this.productCategory}}
+                {{this.category}}
             </td>
             <td style="width:20%">
               {{this.price}}
