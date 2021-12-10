@@ -31,6 +31,7 @@ async function create(productName, description, price, img, sellerID) {
     purchased: false,
     price: price,
     comments: [],
+    activeCarts: []
   };
 
   const insertInfo = await productCollection.insertOne(newProduct);
