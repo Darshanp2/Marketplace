@@ -6,6 +6,7 @@
     <input type="number" name="phone" id="phone" placeholder={{user.phoneNumber}} min="0">
     <input type="submit" value="Update">
 </form>
+
 <ul>
     {{#each products}}
         <li>{{this.name}}</li>
@@ -13,5 +14,6 @@
         <a href="/product/updateProduct/{{this._id}}">edit</a>   <a href="/product/deleteProduct/{{this._id}}">delete</a>
         {{/each}}
 </ul>
+
 
 
