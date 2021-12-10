@@ -1,3 +1,4 @@
+<main>
 <div class="jumbotron text-center">
   <br>
   <br>
@@ -24,6 +25,11 @@
       <form action="/product/exploreproduct" method="get">
         <input type="submit" value="Explore Products" />
       </form>
+       {{#if error2}}
+    <div class="login-error">
+        <p>{{error2}}</p>
+    </div>
+{{/if}}
       <br>
     </div>
   </div>
@@ -39,6 +45,11 @@
         sell it. You can do it for free now!</p>
       <form action="/product/advertisement" method="get">
         <input type="submit" value="Post an advertisement" />
+        {{#if error1}}
+    <div class="login-error">
+        <p>{{error1}}</p>
+    </div>
+{{/if}}
       </form>
     </div>
   </div>
@@ -71,10 +82,16 @@
           <div class="form-elem">
             <label for="email">Email:</label>
             <input name="email" id="email" type="text" value="{{email}}"
-              placeholder="Enter your Email Address!" /><br><br>
+            placeholder="Enter your Email Address!" required><br><br>
             <label for="password">Password:</label>
-            <input name="password" id="password" type="password" placeholder="Enter your Password" />
+          <input name="password" id="password" type="password" placeholder="Enter your Password" required>
+         
             <br>
+          {{#if error}}
+    <div class="login-error">
+        <p>{{error}}</p>
+    </div>
+{{/if}}
             <br>
             {{!-- Find replacement for &nbsp --}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -107,6 +124,10 @@
     </div>
   </div>
 </div>
+        {{/if}}
+
+
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-{{/if}}
+
+</main>
