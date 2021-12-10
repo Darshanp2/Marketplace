@@ -25,6 +25,11 @@
       <form action="/product/exploreproduct" method="get">
         <input type="submit" value="Explore Products" />
       </form>
+       {{#if error2}}
+    <div class="login-error">
+        <p>{{error2}}</p>
+    </div>
+{{/if}}
       <br>
     </div>
   </div>

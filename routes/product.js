@@ -164,7 +164,7 @@ router.get("/exploreproduct", async (req, res) => {
         productList: productList,
       });
     } else {
-      res.render("posts/landingpage", { error: "You need to login first" });
+      res.render("posts/landingpage", { error2: "You need to login first" });
     }
   } catch (e) {
     res.status(e[0]).json({ error: e[1] });

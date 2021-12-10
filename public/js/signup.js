@@ -89,7 +89,6 @@ $(function () {
   if (myForm) {
     myForm.submit(function (event) {
       event.preventDefault();
-
       var email_term = email.val();
       var password_term = password.val().trim();
       var name1 = name.val();
@@ -105,12 +104,14 @@ $(function () {
       } else if (name1.length < 4) {
         errorList.append(`<li>Minimuin name characters are 4</li>`);
         error.show();
-      } else if (!name1.match(nameCheck)) {
+      }
+      /*else if (!name1.match(nameCheck)) {
         errorList.append(`<li>Incorrect name type</li>`);
         error.show();
-      }
-      let nameCheck =
-        /(?:[\w\s][^!@#$%^&*()?//><,.;:'"\{\}\[\]=+~`\-_|\\0-9]+)/;
+      }*/
+
+      //let nameCheck =
+      // /(?:[\w\s][^!@#$%^&*()?//><,.;:'"\{\}\[\]=+~`\-_|\\0-9]+)/;
 
       if (!address1 || address1.trim() === "") {
         errorList.append(`<li>Provide address</li>`);
@@ -147,6 +148,9 @@ $(function () {
         errorList.append(`<li>E-Mail must be in correct format!</li>`);
         error.show();
       }
+      /* if (error) {
+        event.preventDefault();
+      }*/
       if (!password_term || password_term.trim() === "") {
         errorList.append(`<li>Password must be provided!</li>`);
         error.show();
