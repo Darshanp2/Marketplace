@@ -139,12 +139,9 @@ router.post("/login", async (req, res) => {
     let newUser1 = await userData.checkUser(email, password);
     if (newUser1.authenticated == true) {
       req.session.user = newUser1.userId;
-      res.redirect("/");
+      res.json({login : true});
     } else {
-      res.status(401).render("posts/landingpage", {
-        error: "Wrong email or password.",
-        email: email,
-      });
+      res.json({login : false});
     }
     // return to main page?
   } catch (e) {
