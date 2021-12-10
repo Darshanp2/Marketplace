@@ -36,7 +36,7 @@
             <form  action="/product/{{prod._id}}" id="staticForm" method="post">
               <label  class="lol" for="palstr">Enter your comment below</label>
               <br>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea  id="comm" name="phrase" placeholder="Your views!"  class='full-width-input'></textarea>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea  id="comm" name="phrase" placeholder="Your views!"  class='full-width-input' required></textarea>
                 {{#if error}}
                 <p>{{error}}</p>
                 {{/if}}

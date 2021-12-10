@@ -7,11 +7,34 @@
         console.log(window.location);
         window.location = href;
     });
+
+    
 })(jQuery);
 
-function fName(id, field) {
-    let input, filter, table, row, i, txtValue,col;
+$(document).on("click", "#login-sumbmit", function (event) {
+    event.preventDefault();
+    let form = $("#login-form")
+    let requestConfig = {
+        method: form.attr('method'),
+        url: form.attr('action'),
+        data: form.serialize()
+    };
+    $.ajax(requestConfig).then(function (response){
+        let result = $(response)
+        if(result[0].login){
+            $('#login-div').hide()
+            $('#update-profile-2').css("display","");
+            let dropdown = $('#dropdown-2');
+            $('#dropdown-2').css("display","");
+        }
+        else{
+            $('#login-error').show()
+        }
+    })
+})
 
+function fName(id, col) {
+    let input, filter, table, row, i, txtValue;
     input = document.getElementById(id);
     filter = input.value.toUpperCase();
     let rows = document.getElementsByClassName("clickable-row");
@@ -39,7 +62,7 @@ function fName(id, field) {
 }
 
 function fCost(id, col, compareFn = (a, b) => a >= b) {
-    let input, filter, table, row, i, txtValue;
+    let input, table, row, i, txtValue;
     input = document.getElementById(id);
     input = input.value
     let rows = document.getElementsByClassName("clickable-row");
@@ -48,7 +71,7 @@ function fCost(id, col, compareFn = (a, b) => a >= b) {
         row = rows[i];
         txtValue = row.cells[col].innerText;
         let maxCost = parseFloat(txtValue)
-        if (compareFn(input.value, maxCost)) {
+        if (compareFn(parseFloat(input.value), maxCost)) {
             row.style.display = "";
             c = c + 1;
         } else {

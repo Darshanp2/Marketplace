@@ -26,52 +26,90 @@ router.get("/updateProfile", async (req, res) => {
 //     res.status(500).json({ error: e });
 //   }
 // }),
+
 router.post("/updateProfile", async (req, res) => {
+  const name = req.body.Name.toString().trim();
+  const address = req.body.Address.toString().trim();
+  const email = req.body.Email.toString().trim();
+  const password = req.body.password.toString().trim();
+  const phone = req.body.phone.toString().trim();
+
+  try {
+    let userInfo = await userData.getUser(req.session.user);
+    if (!userInfo) {
+      res.status(400).render("posts/updateprofile", {
+        error: "User Not found.",
+        signed_in: req.body.signed_in,
+        partial: "editUser",
+      });
+      return;
+    }
+
+    if (name) await userData.updateName(req.session.user, name);
+    if (address) await userData.updateAddress(req.session.user, address);
+    if (email) await userData.updateEmail(req.session.user, email);
+    if (password) await userData.updatePassword(req.session.user, password);
+    if (phone) await userData.updatePhone(req.session.user, phone);
+
+    res.redirect("/updateprofile");
+    return;
+  } catch (e) {
+    res.status(404).render("posts/updateprofile", {
+      error: "User not found.",
+      signed_in: req.body.signed_in,
+      partial: "editUser",
+    });
+    return;
+  }
+});
+/*router.post("/updateProfile", async (req, res) => {
   try {
     let input = req.body;
     let { Name, Email, password, Address, phone } = input;
     let check0 = phone;
     let result = check0.slice(0, 1);
     if (result == 0) {
-      res.status(400).render("posts/signup", {
+      res.status(400).render("posts/updateProfile", {
         error: "first digit of phone number should be non zero",
       });
     }
-    const phoneNoCheck = /^\(?([0-9]{3})\)?[-]?([0-9]{3})[-]?([0-9]{4})$/;
-    const phoneCheck = phoneNoCheck.test(phone);
-    if (phoneCheck == false) {
-      res.status(400).render("posts/signup", {
+
+    if (!email || !password) {
+    res.status(400).render("posts/updateProfile", {
+      error: " HTTP 400 Error: Invalid input. All fields must be supplied.",
+      partial: "updateProfile",
+    });
+  }*/
+/* 
+  const phoneNoCheck = /^\(?([0-9]{3})\)?[-]?([0-9]{3})[-]?([0-9]{4})$/;
+    const phoneCheck = phoneNoCheck.test(phone);if (phoneCheck == false) {
+      res.status(400).render("posts/updateProfile", {
         error: "Phone number should be 10 digits",
       });
     }
-    /*if (!email || !password) {
-    res.status(400).render("posts/signup", {
-      error: " HTTP 400 Error: Invalid input. All fields must be supplied.",
-      partial: "signup",
-    });
-  }*/
+   
 
     for (let i of email)
       if (i == " ") {
-        res.status(401).render("posts/signup", {
+        res.status(401).render("posts/updateProfile", {
           error: "Email has empty sapces.",
         });
       }
     for (let i of password)
       if (i == " ") {
-        res.status(401).render("posts/signup", {
+        res.status(401).render("posts/updateProfile", {
           error: "Password has empty sapces",
         });
       }
     if (email && Name && password) {
       if (password.length < 6) {
-        res.status(401).render("posts/signup", {
+        res.status(401).render("posts/updateProfile", {
           //  title: "Create Account",
           error: "Password must be at least 6 characters.",
         });
       }
       if (Name.length < 4) {
-        res.status(401).render("posts/signup", {
+        res.status(401).render("posts/updateProfile", {
           error: "Name must be at least 4 characters.",
         });
       }
@@ -79,14 +117,14 @@ router.post("/updateProfile", async (req, res) => {
       let nameCheck =
         /(?:[\w\s][^!@#$%^&*()?//><,.;:'"\{\}\[\]=+~`\-_|\\0-9]+)/;
       if (!Name.match(nameCheck)) {
-        res.status(401).render("posts/signup", {
+        res.status(401).render("posts/updateProfile", {
           error: "Name is not valid.",
         });
       }
 
       let emailCheck = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       if (!email.match(emailCheck)) {
-        res.status(401).render("posts/signup", {
+        res.status(401).render("posts/updateProfile", {
           error: "Email address is not valid.",
         });
       }
@@ -103,7 +141,7 @@ router.post("/updateProfile", async (req, res) => {
   } catch (e) {
     res.json(e);
   }
-});
+});*/
 
 router.get("/", async (req, res) => {
   try {
@@ -140,6 +178,12 @@ router.post("/signup", async (req, res) => {
 
   const password = req.body.password.toString();
   //.trim().replace(/\s/g, "");
+  /*if (!email || !password) {
+    res.status(400).render("posts/signup", {
+      error: " HTTP 400 Error: Invalid input. All fields must be supplied.",
+      partial: "signup",
+    });
+  }*/
   let check0 = phoneNumber;
   let result = check0.slice(0, 1);
   if (result == 0) {
@@ -155,12 +199,6 @@ router.post("/signup", async (req, res) => {
       error: "Phone number should be 10 digits",
     });
   }
-  /*if (!email || !password) {
-    res.status(400).render("posts/signup", {
-      error: " HTTP 400 Error: Invalid input. All fields must be supplied.",
-      partial: "signup",
-    });
-  }*/
 
   for (let i of email)
     if (i == " ") {
@@ -260,12 +298,9 @@ router.post("/login", async (req, res) => {
     let newUser1 = await userData.checkUser(email, password);
     if (newUser1.authenticated == true) {
       req.session.user = newUser1.userId;
-      res.redirect("/");
+      res.json({login : true});
     } else {
-      res.status(401).render("posts/landingpage", {
-        error: "Wrong email or password.",
-        email: email,
-      });
+      res.json({login : false});
     }
     // return to main page?
   } catch (e) {
