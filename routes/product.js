@@ -75,7 +75,6 @@ router.post("/:id", async (req, res) => {
 router.get("/delete/:id", async (req, res) => {
   let id = req.params.id;
   const removeProduct = await productData.deleteProduct(id);
-  let userID = req.session.user;
   if (removeProduct) {
     res.redirect("/user/updateProfile");
   }
@@ -161,6 +160,7 @@ router.get("/exploreproduct", async (req, res) => {
   try {
     if (req.session.user) {
       let productList = await productData.getAll();
+      
       console.log(productList)
       res.render("posts/explore", {
         title: "Explore",

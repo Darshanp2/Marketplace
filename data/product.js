@@ -1,6 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const product = mongoCollections.product;
 const user = mongoCollections.user;
+const cart = mongoCollections.cart;
 const { ObjectId } = require('bson');
 
 async function create(productName, description,price,category,img,sellerID) {
@@ -22,8 +23,6 @@ async function create(productName, description,price,category,img,sellerID) {
     const usersCollection=await user()
     const productCollection = await product();
 
-
-
     let newProduct = {
         productName: productName,
         description: description,
@@ -32,8 +31,8 @@ async function create(productName, description,price,category,img,sellerID) {
         category: category,
         purchased: false,
         price: price,
-        comments: []
-    activeCarts: []
+        comments: [],
+        activeCarts: []
     };
       
     const insertInfo = await productCollection.insertOne(newProduct);
@@ -88,9 +87,37 @@ async function createcomment(productId, comment, userid) {
   return result;
 }
 
+async function deleteProduct(prodId){
+
+  const prodCol = await product()
+  let productModel = await prodCol.findOne({_id : ObjectId(prodId)})
+  let carts = productModel.activeCarts
+  if(carts != null){ 
+    const cartCol = await cart()
+    for(let cartId of carts){
+      let cartModel = await cartCol.findOne({_id: ObjectId(cartId)})
+      let products = cartModel.products
+      let newList = []
+      for(let prod of products){
+          if(prod != prodId) newList.push(prod)
+      }
+      let updatedInfo = await cartCol.updateOne({_id : ObjectId(cartId)},
+      {
+          $set : {
+              products : newList
+          }
+      })
+  }
+}
+let deletedInfo = await prodCol.deleteOne({_id: ObjectId(prodId)})
+if(deletedInfo.deletedCount == 0) return false
+return true
+}
+
 module.exports = {
   create,
   getProduct,
   getAll,
   createcomment,
+  deleteProduct
 };

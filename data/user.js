@@ -98,7 +98,7 @@ async function createUser(name, address, phoneNumber, email, password) {
     phoneNumber: phoneNumber,
     email: email,
     password: hashedPassword,
-    activeCart: [],
+    activeCart: "",
   };
 
   const insertInfo = await userCollection.insertOne(newUser);
@@ -132,7 +132,7 @@ async function checkUser(email, password) {
   if (res == null) {
     throw `error`;
   }
-  if (await bcrypt.compare(password, res.hashedPassword)) {
+  if (await bcrypt.compare(password, res.password)) {
     return { userId: removeObjectFromId(res)._id, authenticated: true };
   } else {
     throw `Password not match`;
@@ -140,7 +140,7 @@ async function checkUser(email, password) {
 }
 module.exports = {
   updateProfile,
-  getUser,
+  getUser,  
   createUser,
   checkUser,
 };

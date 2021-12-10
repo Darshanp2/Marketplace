@@ -7,7 +7,6 @@ router.get("/updateProfile", async (req, res) => {
   try {
     let id = req.session.user;
     const result = await userData.getUser(id);
-    console.log(result)
     res.render("posts/updateprofile", {
       user: result.user,
       products: result.products,
