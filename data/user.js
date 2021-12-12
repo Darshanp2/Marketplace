@@ -135,7 +135,7 @@ async function checkUser(email, password) {
   if (await bcrypt.compare(password, res.password)) {
     return { userId: removeObjectFromId(res)._id, authenticated: true };
   } else {
-    throw `Password not match`;
+    return { userId: removeObjectFromId(res)._id, authenticated: false };
   }
 }
 module.exports = {
