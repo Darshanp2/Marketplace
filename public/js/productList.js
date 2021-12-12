@@ -12,20 +12,59 @@
 })(jQuery);
 
 $(document).on("click", "#login-sumbmit", function (event) {
+    let password = $("#password");
+  
+    let email = $("#email");
+
+  
+    let error = $("#error");
+    let errorList = $("#errorList");
+    error.hide();
+
+    var email_term = email.val();
+    var password_term = password.val().trim();
+   
+
+
+    
+   
+
+    errorList.empty();
+    error.hide();
+ 
+    
+    if(!password_term || password_term.trim().length == 0) errorList.append(`<li>Enter Password</li>`);
+      if(!email_term || email_term.trim().length == 0) errorList.append(`<li>Enter email </li>`);
+      else if(! /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email_term.toLowerCase())) errorList.append(`<li>Incorrect Email Id</li>`);
+      if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(password_term)) errorList.append(`<li>Password must have one lower case,one upper case alphabets, one number and one special character</li>`);
+      
+      if(errorList.length){
+        error.show()
+        event.preventDefault();
+      }
+
+
+
     event.preventDefault();
     let form = $("#login-form")
     let requestConfig = {
         method: form.attr('method'),
         url: form.attr('action'),
         data: form.serialize()
+
+        
+
+
     };
+
     $.ajax(requestConfig).then(function (response){
         let result = $(response)
         if(result[0].login){
             $('#login-div').hide()
             $('#update-profile-2').css("display","");
-            let dropdown = $('#dropdown-2');
+            // let dropdown = $('#dropdown-2');
             $('#dropdown-2').css("display","");
+            $('#cart).css("display","");
         }
         else{
             $('#login-error').show()
@@ -71,7 +110,7 @@ function fCost(id, col, compareFn = (a, b) => a >= b) {
         row = rows[i];
         txtValue = row.cells[col].innerText;
         let maxCost = parseFloat(txtValue)
-        if (compareFn(parseFloat(input.value), maxCost)) {
+        if (compareFn(parseFloat(input), maxCost)) {
             row.style.display = "";
             c = c + 1;
         } else {
