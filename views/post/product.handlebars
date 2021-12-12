@@ -1,7 +1,7 @@
-<div>
-  <br>
-  <br>
-  <table class="table table-hover">
+<div> 
+    <br>
+    <br>
+ <table class="table table-hover">
     <h1>&nbsp;&nbsp;Product Details:</h1>
     <thead class="thead-light">
       <tr>
@@ -14,62 +14,44 @@
       <div class="product-info">
         <div class="product-image">
           <div>
-            <img src={{prod.image}} width="85" height="85" />
+            <img src={{prod.image}} />
             <h1>{{prod.productName}}</h1>
             <p>{{prod.description}}</p>
             <h2>Price: {{prod.price}}</h2>
           </div>
           <td style="width:70%">
-            <h5><a href="productdetails/{{this._id}}"> {{this.productName}} </a></h5>
+            <h5><a href="productdetails/{{this._id}}"> {{this.productName}}</a></h5>
             <h6>{{this.productCategory}}</h6>
             <h6>{{this.price}}</h6>
           </td>
           <form action="/cart/addToCart/{{prod._id}}" method="get">
             <input type="submit" value="Add to cart">
           </form>
-          <div>
-            {{#if error}}
-            <p>{{error}}</p>
-            {{/if}}
-          </div>
-
         </div>
     </tbody>
   </table>
 
-  <table class="table table-hover">
-    <thead class="thead-light"></thead>
-    <tr>
-      <div class="addcomments">
-        <br><br><br><br>
-        <form action="/product/{{prod._id}}" id="commentForm" method="post">
-          <label class="lol" for="palstr">Enter your comment below</label>
-          <br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea id="phrase" name="phrase" placeholder="Your views!"
-            class='full-width-input' required></textarea>
-          {{#if error}}
-          <p>{{error}}</p>
-          {{/if}}
-          <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button
-            type="submit">Submit</button>
-          <div id="error">
-            <ul id="errorList"></ul>
-          </div>
-          {{#if error}}
-          <div class="login-error">
-            <p>{{error}}</p>
-          </div>
-          {{/if}}
-        </form>
-        <br><br>
-        <h5>Comments:</h5>
-          <script src="/public/js/comment.js"></script>
-        <ul>
-          {{#each comments}}
-          <li>{{comment}}</li>
-          {{/each}}
-        </ul>
-      </div>
-    </tr>
-  </table>
-</div>
+    <table class="table table-hover">
+      <thead class="thead-light"></thead>
+      <tr>
+        <div class="addcomments">
+          <br><br><br><br>
+            <form  action="/product/{{prod._id}}" id="staticForm" method="post">
+              <label  class="lol" for="palstr">Enter your comment below</label>
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea  id="comm" name="phrase" placeholder="Your views!"  class='full-width-input' required></textarea>
+                {{#if error}}
+                <p>{{error}}</p>
+                {{/if}}
+                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Submit</button>
+            </form>
+            <br><br><h5>Comments:</h5>
+            <ul>
+              {{#each comments}}
+                <li>{{comment}}</li>
+              {{/each}}
+            </ul>
+        </div>
+      </tr>
+    </table>
+</div> 

@@ -4,14 +4,14 @@
   <div class="productadvertisement">
   <label for="productName">
     Product Name:
-    <input id="productName" type="text" name="productName" placeholder="Product Name" required>
+    <input id="productName" type="text" name="productName" id="productName" placeholder="Product Name" required>
   </label><br><br>
   <label for="description">Description
-    <input id="description" type="text" name="description" placeholder="Description" required>
+    <input id="description" type="text" name="description" id="description" placeholder="Description" required>
   </label><br><br>
   <label for="pet-select">Choose a pet:</label>
 
-<select name="category" id="product-select" required>
+<select name="category" id="product-select">
     <option value="">--Please choose an option--</option>
     <option value="Electronics">Electronics</option>
     <option value="Furniture">Furniture</option>
@@ -22,20 +22,21 @@
 </select>
   <label for="price">
     Price
-    <input id="price" type="number" name="price" id="price" min="1" placeholder="Enter a price you want to sell for" required>
+    <input id="price" type="number" name="price" id="price" min="0" placeholder="Enter a price you want to sell for" required>
   </label>
    <div id="error">
   <ul id="errorList"></ul>
 </div><br><br>
   <label for="productImg">Upload Images for your product:</label><br><br>
   &emsp;&emsp;&emsp;&emsp;
-  <input id="image" type="file" name="productImg" accept=".png, .jpeg, .jpg" required><br><br>
+  <input type="file" name="productImg" accept=".png, .jpeg, .jpg" required><br><br>
   <button type="submit" id="button">Submit</button><br>
   </div>
 </form>
 
-{{#if errors}}
+{{#if hasErrors}}
 <p id="cl">{{error}}</p>
 {{/if}}
-    <script src="/public/js/advertisement.js"></script>
 </div>
+    <script src="/public/js/product.js"></script>
+

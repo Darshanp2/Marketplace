@@ -1,44 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MarketPlace!</title>
+  <title>{{title}}</title>
   <link rel="stylesheet" href="../../public/site.css">
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-    crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="/public/js/productList.js"></script>
-</head>
-{{!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand">
-    <img class="mainimage" src="../../public/assets/logo.jpg" alt="MarketPlaceLogo" />
-  </a>
-  <span class="navbar-text"> MarketPlace</span>
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link 1</a>
-    </li>
-  </ul>
-  </nav> --}}
-
   <div class="header">
-    <a href="/"><img class="mainimage" src="../../public/assets/logo.jpg" alt="MarketPlaceLogo" /></a>
+    <a href="/"><img class="mainimage" src="../../public/assets/logo.jpg" alt="MarketPlaceLogo"  /></a>
     <h1>MarketPlace</h1>
-  </div>
-
+</head>
+</div>
 {{#if user}}
 <div class="dropdown">
   <button>Other Options</button>
@@ -48,33 +25,31 @@
     <a href="/logout">logout</a>
   </div>
 </div>
-<div class ="movingright">
-  <form action="/cart/" method="get">
-    <input type="submit" value="cart">
-  </form>
-</div>
 {{/if}}
 
-<div id="dropdown-2" class="dropdown" style="display: none;">
-  <button>Other Options</button>
-  <div class="dropdown-content">
-    <a href="/user/updateProfile">Update Profile</a>
-    <a href="/user/orderHistory">Order History</a>
-    <a href="/logout">logout</a>
+<body>
+  <div class="main">
+    {{{body}}}
   </div>
-</div>
-<div id="cart" style="display: none;">
-  <form action="/cart/" method="get">
-    <input type="submit" value="cart">
-  </form> 
-</div>
-<div>
-{{{body}}}
-{{!-- Ignore this sign up now. Have to work on it --}}
-{{!-- <div>
-  <a class="nav-link  " href="/user/signup">Sign UP</a>
-</div>
-<br> --}}
-</div>
+  {{!-- Ignore this sign up now. Have to work on it --}}
+  {{!-- <div>
+    <a class="nav-link  " href="/user/signup">Sign UP</a>
+  </div>
+  <br> --}}
+  <br>
+  <br>
+  <br>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
+    <script src="tota11y.min.js"></script>
+
+</body>
 
 </html>
