@@ -9,7 +9,7 @@
   <label for="description">Description
     <input id="description" type="text" name="description" placeholder="Description" required>
   </label><br><br>
-  <label for="pet-select">Choose a category:</label>
+  <label for="product-select">Choose a category:</label>
 
 <select name="category" id="product-select" required>
     <option value="">--Please choose an option--</option>
@@ -20,16 +20,17 @@
     <option value="Vehicles">Vehicles</option>
     <option value="other">Other</option>
 </select>
+<br><br>
   <label for="price">
-    Price
-    <input id="price" type="number" name="price" id="price" min="1" placeholder="Enter your price for product" required>
+    Price ($)
+    <input id="price" type="number" name="price" min="1" placeholder="Enter your price for product" required>
   </label>
    <div id="error">
   <ul id="errorList"></ul>
 </div><br><br>
   <label for="productImg">Upload Images for your product:</label><br><br>
   &emsp;&emsp;&emsp;&emsp;
-  <input id="image" type="file" name="productImg" accept=".png, .jpeg, .jpg" required><br><br>
+  <input id="image"  name="productImg" type="file" accept=".png, .jpeg, .jpg" required><br><br>
   <button type="submit" id="button">Submit</button><br>
   </div>
 </form>
@@ -38,4 +39,3 @@
 <p id="cl">{{error}}</p>
 {{/if}}
     <script src="/public/js/advertisement.js"></script>
-</div>

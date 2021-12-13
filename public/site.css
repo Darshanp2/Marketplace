@@ -1,3 +1,4 @@
+
 .logo-image{
   width: 46px;
   height: 46px;
@@ -35,7 +36,7 @@
 }
 
 .login-error {
-  color: red;
+  color: rgb(114, 9, 9);
 }
 .login-container {
   margin: 70px;
@@ -123,9 +124,9 @@ thead {
 
 textarea {
   resize: none;
-  display: block;
-    margin-left: auto;
-    margin-right: auto;
+  float:center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .centered {
@@ -259,4 +260,9 @@ textarea {
 .dropdown-content a:hover {
   color: #ffffff;
   background-color: #00a4bd;
+}
+
+[data-ss-social="WhatsApp,Email"]{
+  padding:5px;
+  
 }

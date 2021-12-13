@@ -54,7 +54,9 @@ $(document).on("click", "#login-sumbmit", function (event) {
         }
         else {
             $('#login-error').css("display","");
+            $('#login-error1').css("display","");
         }
+        
     })
 }
 })

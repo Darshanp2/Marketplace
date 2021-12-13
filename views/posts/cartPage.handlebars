@@ -8,13 +8,14 @@
     <td><img src={{this.image}} width="100" height="100"  /></td>
     <td><h4>{{this.productName}}</h4></td>
     <td><h4>{{this.price}}</h4></td>
-    <button onclick="location.href='/cart/removeProduct/{{this._id}}'">remove</button>
+    <button onclick="location.href='/cart/removeProduct/{{this._id}}'">Remove</button> <br><br>
 {{/each}}
 {{#if error}}
 <form action="/" method="get">
     <input type="submit" value="Back to Home Page">
 </form>
 {{else}}
+<h2>Total Amount($):{{totalPrice}}</h2>
 <form action="/cart/purchase" method="post">
     <input type="submit" value="Purchase">
 </form>
@@ -22,8 +23,7 @@
 {{#if error}}
 <p>{{error}}</p>
 {{/if}}
-<h2>{{totalPrice}}</h2>
-</div>
+
 {{else}}
     <h2 class="centered"> Your cart is empty</h2>
 {{/if}}
