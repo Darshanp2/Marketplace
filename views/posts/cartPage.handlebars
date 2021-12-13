@@ -1,7 +1,30 @@
+{{#if products}}
+<br><br>
+<h2 class="centered">Post your product</h2><br><br>
+<div class="productadvertisement">
+
+
 {{#each products}}
-    <td><h4>{{this.name}}</h4></td>
+    <td><img src={{this.image}} width="100" height="100"  /></td>
+    <td><h4>{{this.productName}}</h4></td>
     <td><h4>{{this.price}}</h4></td>
     <button onclick="location.href='/cart/removeProduct/{{this._id}}'">remove</button>
 {{/each}}
-
+{{#if error}}
+<form action="/" method="get">
+    <input type="submit" value="Back to Home Page">
+</form>
+{{else}}
+<form action="/cart/purchase" method="post">
+    <input type="submit" value="Purchase">
+</form>
+{{/if}}
+{{#if error}}
+<p>{{error}}</p>
+{{/if}}
 <h2>{{totalPrice}}</h2>
+</div>
+{{else}}
+    <h2 class="centered"> Your cart is empty</h2>
+{{/if}}
+

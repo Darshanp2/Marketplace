@@ -6,6 +6,7 @@ const productData = data.product;
 const multer = require("multer");
 const product = mongoCollections.product;
 const { ObjectId } = require("bson");
+const xss = require('xss');
 
 const fileStorageEngine = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -18,27 +19,11 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine });
 
 router.get("/productdetails/:id", async (req, res) => {
-  if (!req.params.id) {
-    res.status(404).json({ error: " No input" });
-    return;
-  }
-
-  if (
-    typeof req.params.id !== "string" ||
-    !req.params.id.replace(/\s/g, "").length
-  ) {
-    res
-      .status(400)
-      .json({ error: "Input is not a string or is an empty string" });
-    return;
-  }
-  // if (ObjectId.isValid(req.params.id) != true) {
-  //     res.status(400).json({ error: 'Input is not a valid ObjectId' });
-  //     return;
-
-  // }
+  if(req.session.user){
+    validateId(xss(req.params.id))
   try {
-    const prod = await productData.getProduct(req.params.id);
+
+    const prod = await productData.getProduct(xss(req.params.id));
     let comments = prod.comments;
 
     res.status(200).render("post/product", {
@@ -47,18 +32,14 @@ router.get("/productdetails/:id", async (req, res) => {
       comments: comments,
     });
   } catch (e) {
-    res.status(404).json({ message: "Restaurant not found" });
+    res.status(e[0]).render('posts/error',{ error: e[1] });
   }
+}
 });
 
 router.post("/:id", async (req, res) => {
-  if (!req.body.phrase) {
-    res.status(400).render("post/product", { error: "No input provided" });
-  }
-
-  if (typeof req.body.phrase !== "string") {
-    res.status(400).render("post/product", { error: "Input is not a string" });
-  }
+  if(req.session.user){
+validateId(xss(req.params.id))
   try {
     //const { username, password } = usersData;
     const newcomment = await productData.createcomment(
@@ -68,45 +49,74 @@ router.post("/:id", async (req, res) => {
     );
     res.redirect(`/product/productdetails/${req.params.id}`);
   } catch (e) {
-    res.redirect(`/product/productdetails/${req.params.id}`);
+    res.status(e[0]).render('posts/error',{error: e[1]});
   }
+}
+else{
+  res.redirect('/')
+}
 });
 
 router.get("/delete/:id", async (req, res) => {
+  if(req.session.user){
+
+  try{
   let id = req.params.id;
   const removeProduct = await productData.deleteProduct(id);
   if (removeProduct) {
     res.redirect("/user/updateProfile");
   }
+}
+catch(e){
+  res.status(e[0]).render('post/error',{error: e[1]})
+}
+}
+else{
+  res.redirect('/')
+}
 });
 
 router.get("/advertisement", async (req, res) => {
-  try {
-    if (req.session.user) {
+  if(req.session.user){
+  try{
       res.render("posts/advertisement", { title: "Post" });
-    } else {
-      res.render("posts/landingpage", { error1: "You need to login first" });
-      // res.render("posts/landingpage");
-      //res.send(<script>alert("your alert message")</script>);
-    }
-
-    return;
-  } catch (e) {
-    res.status(400).json("Error");
   }
+    catch (e) {
+    res.status(e[0]).render("posts/error",{error: e[1]});
+  }
+}
+else{
+  res.render("posts/landingpage", { error1: "You need to login first" });
+}
 });
 
 router.post(
   "/advertisement/upload",
   upload.single("productImg"),
   async (req, res) => {
+    if(req.session.user){
+
+    
     try {
       const params = req.body;
-      console.log(req.body)
-      let imagex = "../../" + req.file.path;
-    
       const { productName, description,category, price} = params;
-      if (req.session.user) {
+      let imagex = "../../" + req.file.path;
+      if (!price) throw[400,"You must provide with all the details"];
+      if (!productName) throw [400,"You must provide with all the details"];
+      if (!description) throw [400,"You must provide with all the details"];
+      if (!price) throw [400,"You must provide with all the details"];
+      if(!category) throw [400,"You must provide with all the details"]
+      if (typeof productName!='string') throw[400,"You must provide string for product Name"];
+      if(typeof productName!=='string' || typeof description!=='string') throw [400,'Input must be a string'];
+      if(!/[a-zA-Z0-9]/.test(productName)) throw [400,'Product Name should only contain numbers and alphabets']
+      var resi = productName.replace(/ /g, "");
+      if(resi==0) throw[400,"Invalid Product Name"];
+      if (typeof description!='string') throw[400,"You must provide string for description"];
+      resi = description.replace(/ /g, "");
+      if(resi==0) throw[400,"Invalid Description"];
+      if (parseInt(price) < 1) throw[400,"You must provide valid price"];
+    
+      
         let userID = req.session.user;
         let newProduct = await productData.create(
           productName,
@@ -116,121 +126,111 @@ router.post(
           imagex,
           userID
         );
-        res.render("posts/landingpage");
-        return;
-      } else {
-        res
-          .status(400)
-          .render("posts/landingpage", { title: "Product Posted" });
-        return;
+        res.render("posts/landingpage", { title: "Product Posted" ,user:req.session.user});
       }
-    } catch (e) {
-      if (typeof e == "object") {
-        if (e[1]) {
-          res.status(400).render("posts/advertisement", {
-            hasErrors: true,
-            error: e[1],
-            title: "Post",
-          });
-          return;
-        } else {
-          res.status(500).render("posts/advertisement", {
-            hasErrors: true,
-            error: "Internal Server Error",
-            title: "Post",
-          });
-          return;
-        }
-      }
+    catch (e) {
+      res.render("posts/landingpage", {title: 'Post an Advertisement',user:req.session.user});  
     }
   }
+  else{
+    res.render("posts/landingpage", { error1: "You need to login first" });
+  }
+}
 );
 
-// router.get('/:id', async (req, res) => {
-//     try {
-//       let product = await productData.get(req.params.id);
-//       res.status(200).json(product);
-//     } catch (e) {
-//       res.status(e[0]).json({ error: e[1] });
-//     }
 
-// });
 
 router.get("/exploreproduct", async (req, res) => {
+  if(req.session.user){
   try {
-    if (req.session.user) {
+  
       let productList = await productData.getAll();
-      
-      console.log(productList)
       res.render("posts/explore", {
         title: "Explore",
         partial: "products-list-script",
         productList: productList,
       });
-    } else {
-      res.render("posts/landingpage", { error2: "You need to login first" });
     }
-  } catch (e) {
+   catch (e) {
     res.status(e[0]).json({ error: e[1] });
   }
+}
+else{
+  res.redirect('/')
+}
 });
 
 router.post("/exploreproduct", async (req, res) => {
+  if(req.session.user){
   try {
     const params = req.body;
     if (!params) {
-      res.status(400).render("posts/explore", {
-        hasErrors: true,
-        error: "Input not provided for search",
-        title: "Explore",
-      });
+      res.status(400).render("posts/explore", { error: "Input not provided for search",title: "Explore"});
       return;
     }
     if (!params.search) {
-      res.status(400).render("posts/explore", {
-        hasErrors: true,
-        error: "Input not provided for search",
-        title: "Explore",
-      });
+      res.status(400).render("posts/explore", {error: "Input not provided for search",title: "Explore"});
       return;
     }
-    const { search } = params;
   } catch (e) {
     res.status(e[0]).json({ error: e[1] });
   }
+}
+else{
+  res.redirect('/')
+}
 });
 
-router.put("/update", async (req, res) => {
-  const rest = req.body;
-  if (!rest) {
-    res.status(400).json({ error: "No Input" });
-    return;
-  }
-  if (!rest.productName) {
-    res.status(400).json({ error: "Product Name Missing" });
-    return;
-  }
-  if (!rest.description) {
-    res.status(400).json({ error: "Description Missing" });
-    return;
-  }
-  if (!rest.price) {
-    res.status(400).json({ error: "Price Missing" });
-    return;
-  }
-
+router.get("/updateProduct/:id", async (req, res) => {
+  if(req.session.user){
   try {
-    const { productName, description, price } = rest;
-    let updatedProduct = await productData.update(
-      req.params.id,
+    let id = req.params.id;
+    console.log(id)
+    const result = await productData.getProduct(id);
+    res.render("posts/updateProduct", {product: result});
+  } catch (e) {
+    console.log(e);
+    res.json(e);
+  }
+}
+else{
+  res.redirect('/')
+}
+});
+router.post("/updateproducts/:id", async (req, res) => {
+  if(req.session.user){
+    const rest = req.body;
+    const { productName, description, price,category} = rest;
+ 
+ if(productName && productName.trim().length == 0) throw [400,"Enter Product Name"]
+ else if(productName && !/[a-zA-Z0-9]/.test(productName)) throw [400,"Product Name should only contain numbers and alphabets"]
+ if(description && description .trim().length == 0) throw [400,"Enter description"]
+  try {
+    
+    let updatedProduct = await productData.updateProduct(
+      
       productName,
       description,
-      price
+      price,
+      category,
+      req.params.id
     );
-    res.status(200).json(updatedProduct);
+      res.redirect("/");
   } catch (e) {
-    res.status(e[0]).json({ error: e[1] });
+    res.status(e[0]).render("posts/updateProduct",{ error: e[1] });
   }
+}
+else{
+  res.redirect('/')
+}
 });
+
+
+
+function validateId(id){
+  if(typeof id !== "string") throw [405,"invalid URL"]
+  if (!id || id.trim().length ==0) throw [405,"invalid URL"]
+  if(!/^[0-9A-Fa-f]{24}$/.test(id)) throw [405,"invalid URL"]
+}
 
 module.exports = router;

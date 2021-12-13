@@ -1,19 +1,46 @@
-<form action="/user/updateProfile" method="post">
-    <input type="text" name="Name" id="Name" placeholder={{user.name}}>
-    <input type="email" name="Email" id="Email" placeholder={{user.email}}>
-    <input type="password" name="password" id="password" placeholder="Enter new password">
-    <input type="text" name="Address" id="Address" placeholder={{user.address}}>
-    <input type="number" name="phone" id="phone" placeholder={{user.phoneNumber}} min="0">
-    <input type="submit" value="Update">
-</form>
+<div class="forcenter1">
+    <form action="/user/updateProfile" method="post" id="updateprofile">
+        <div class="form-elem">
+            <label for="name">Name:</label>
+                <input name="name" id="name" type="text" value="{{name}}" placeholder="{{user.name}}" minlength="3"  >
+                <br><br>
 
-<ul>
-    {{#each products}}
-        <li>{{this.name}}</li>
-        <li>{{this.price}}</li>
-        <a href="/product/updateProduct/{{this._id}}">edit</a>   <a href="/product/delete/{{this._id}}">delete</a>
+            <label for="address">Address:</label>
+                <input name="address" id="address" type="text" value="{{address}}" placeholder="{{user.address}}" minlength="5">
+                <br><br>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input name="phoneNumber" id="phoneNumber" type="text" min="0" value="{{phoneNumber}}"
+                    placeholder="{{user.phoneNumber}}" ><br><br>
+
+            <label for="email">Email:</label>
+                <input name="email" id="email" type="text" value="{{email}}" placeholder="{{user.email}}" ><br><br>
+
+            <label for="password">Password:</label>
+            <input name="password" id="password" type="password" value="{{password}}"
+                placeholder=" 6 characters minimum"><br><br>
+            
+            <input type="submit" value="Update">
+            <div id="error">
+                <ul id="errorList"></ul>
+            </div>
+
+            {{#if error}}
+            <div class="login-error">
+                <p>{{error}}</p>
+            </div>
+            {{/if}}
+        </div>
+    </form>
+</div>
+<div>
+    <ol>
+        {{#each products}}
+        <li><img src={{this.image}} width="140" height="140" /></li>
+        Name: {{this.productName}}<br>
+        Price($):  {{this.price}}<br>
+        <a href="/product/updateProduct/{{this._id}}">Edit</a> <a href="/product/delete/{{this._id}}">Delete</a>
         {{/each}}
-</ul>
-
-
-
+    </ol>
+    <script src="/public/js/updateprofile.js"></script>
+</div>

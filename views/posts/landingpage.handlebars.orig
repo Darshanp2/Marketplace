@@ -70,7 +70,7 @@
         <a href="/" class="carrd-link"> Forget Password?</a>
         <br>
         <br>
-        <h5>New Here?</h5><a href="/signup" class="carrd-link">Click here to Sign-up</a>
+        <h3>New Here?</h3><a href="/signup" class="carrd-link">Click here to Sign-up</h3>
       </div>
     </form>
   </div>
