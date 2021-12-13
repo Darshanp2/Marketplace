@@ -23,6 +23,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/assisfery/SocialShareJS@1.4/social-share.min.css">
 <script src="https://cdn.jsdelivr.net/gh/assisfery/SocialShareJS@1.4/social-share.min.js"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/assisfery/SocialShareJS@1.4/social-share.min.css">
+<script src="https://cdn.jsdelivr.net/gh/assisfery/SocialShareJS@1.4/social-share.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <script src="/public/js/productList.js"></script>
 </head>
   <div class="header">
@@ -45,7 +48,6 @@
   </form>
 </div>
 {{/if}}
-
 <div id="dropdown-2" class="dropdown" style="display: none;">
   <button>Other Options</button>
   <div class="dropdown-content">
@@ -54,9 +56,9 @@
     <a href="/logout">Logout</a>
   </div>
 </div>
-<div id="cart" style="display: none;">
+<div id="cart" style="display: none;" class ="movingright">
   <form action="/cart/" method="get">
-    <input type="submit" value="cart">
+    <input type="submit" value="Your Cart">
   </form> 
 </div>
 <div>
@@ -67,5 +69,4 @@
 </div>
 <br> --}}
 </div>
-
 </html>

@@ -9,14 +9,20 @@
     advertisement of the product they want to sell by adding the relevant information of
     the product.
   </p>
-</div><!--div end for jumbotron-->
+</div>
+<!--div end for jumbotron-->
 
-<div class="row"> <!--div start for row-->
-  <div class="col-sm-4"> <!--div start for col-sm-4 (1)-->
-    <div class="forcenter"> <!--div start for forcenter (1)-->
-      <div class="fadein"> <!--div start for fadein-->
+<div class="row">
+  <!--div start for row-->
+  <div class="col-sm-4">
+    <!--div start for col-sm-4 (1)-->
+    <div class="forcenter">
+      <!--div start for forcenter (1)-->
+      <div class="fadein">
+        <!--div start for fadein-->
         <img src="../../public/assets/lookingfor.jpg" alt="MarketPlaceLogo" width="250" height="260" />
-      </div> <!--div for fadein-->
+      </div>
+      <!--div for fadein-->
       <br><br>
       <h2>Looking for Anything?</h2>
       <br>
@@ -30,17 +36,23 @@
       </div>
       {{/if}}
       <br>
-    </div> <!--div for forcenter-->
-  </div> <!--div for col-sm-4-->
-  <div class="col-sm-4"> <!--div start for col-sm-4 (2)-->
-    <div class="forcenter"> <!--div start for forcenter (2)-->
-      <div class="fadein"> <!--div start for fadein (2)-->
+    </div>
+    <!--div for forcenter-->
+  </div>
+  <!--div for col-sm-4-->
+  <div class="col-sm-4">
+    <!--div start for col-sm-4 (2)-->
+    <div class="forcenter">
+      <!--div start for forcenter (2)-->
+      <div class="fadein">
+        <!--div start for fadein (2)-->
         <img src="../../public/assets/postingfor.png" alt="MarketPlaceLogo" width="250" height="260" />
-      </div> <!--div for fadein(2)-->
+      </div>
+      <!--div for fadein(2)-->
       <br><br>
       <h2>&nbsp;Want to sell your product?</h2>
-      <br> 
-      <h3>You can post an advertisement of your product over here and can sell it. You can do it for free now!</h3> 
+      <br>
+      <h3>You can post an advertisement of your product over here and can sell it. You can do it for free now!</h3>
       <form action="/product/advertisement" method="get">
         <input type="submit" value="Post an advertisement" />
         {{#if error1}}
@@ -49,89 +61,101 @@
         </div>
         {{/if}}
       </form>
-    </div> <!--div end for forcenter (2)-->
-  </div> <!--div end for col-sm-4 (2)-->
-
-  <div class="col-sm-4"> <!--div start for col-sm-4 (3)-->
-    <div class="forcenter"> <!--div start for forcenter (3)-->
-      <div class="fadein"> <!--div start for fadein (3)-->
-        <img src="../../public/assets/login.jpg" alt="MarketPlaceLogo" width="290" height="300" />
-      </div> <!--div start for fadein (3)-->
-    </div> <!--div end for forcenter (3)-->
-
-    {{!-- </div> --}}
-    {{#if user}}
-    {{!-- <div class="col-sm-4"> --}}
-      <div class="forcenter"> <!--div start for forcenter (3)-->
-        <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Personal Info Changed?</h3>
-        <br>
-        <h3>You can update you personal information here</h3>
-        <form action="/user/updateProfile" method="get">
-          <input type="submit" value="Update Profile" />
-        </form>
-        <br>
-      </div>  <!--div end for forcenter (4)-->
-      {{!-- </div> --}} <!--div end for col-sm-4 (3)-->
-    {{else}}
-    <div id="login-div">
-      <div class="forcenter">
-        <!--div start for forcenter (3)-->
-        {{!-- <img src="../../public/assets/login.jpg" alt="MarketPlaceLogo" width="250" height="260" /> --}}
-        <h2>Login here:</h2>
-        <form method="POST" id="login-form" action="/user/login">
-          <div class="form-elem">
-            <!--div start for form-elem-->
-            <label for="email">Email:</label>
-            <input name="email" id="email" type="text" value="{{email}}"
-              placeholder="Enter your Email Address!"><br><br>
-            <label for="password">Password:</label>
-            <input name="password" id="password" type="password" placeholder="Enter your Password">
-            <br>
-            <br>
-            <div id="login-error" style="display: none;">
-              <p>Invalid username or password</p>
-            </div>
-            <br>
-            {{!-- Find replacement for &nbsp --}}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" id="login-sumbmit" value="Login" />
-            <br>
-            <br>
-            <h3>New Here?</h3><a href="/signup" class="carrd-link">Click here to Sign-up</a>
-            <span id="login-error" hidden>invalid email or password</span>
-          </div> <!--div end for form-elem-->
-        </form>
-      </div>
-      </div>        
-      <div id="update-profile-2" style="display: none;">
-      <div class="forcenter">
-        <!--div start for forcenter (3)-->
-        <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Personal Info Changed?</h3>
-        <br>
-        <h3>You can update you personal information here</h3>
-        <form action="/user/updateProfile" method="get">
-          <input type="submit" value="Update Profile" />
-        </form>
-        <br>
-      </div> <!--div end for forcenter (4)-->
     </div>
-    <!--div end for col-sm-4 (3)-->
+    <!--div end for forcenter (2)-->
   </div>
-</div>
-      <!--div end for forcenter (5)-->
-      <div id="error">
-        <ul id="errorList"></ul>
+  <!--div end for col-sm-4 (2)-->
+
+  <div class="col-sm-4">
+    <!--div start for col-sm-4 (3)-->
+    <div class="forcenter">
+      <!--div start for forcenter (3)-->
+      <div class="fadein">
+        <!--div start for fadein (3)-->
+        <img src="../../public/assets/login.jpg" alt="MarketPlaceLogo" width="290" height="300" />
       </div>
-      {{#if error}}
-      <div class="login-error">
-        <p>{{error}}</p>
-      </div>
-      {{/if}}
+      <!--div start for fadein (3)-->
     </div>
-    <!--div end for col-sm-4 (4)-->
-   
-    {{!-- </div> --}}
+    <!--div end for forcenter (3)-->
+
+    {{!--
+  </div> --}}
+  {{#if user}}
+  {{!-- <div class="col-sm-4"> --}}
+    <div class="forcenter">
+      <!--div start for forcenter (3)-->
+      <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Personal Info Changed?</h3>
+      <br>
+      <h3>You can update you personal information here</h3>
+      <form action="/user/updateProfile" method="get">
+        <input type="submit" value="Update Profile" />
+      </form>
+      <br>
     </div>
+    <!--div end for forcenter (4)-->
+    {{!--
+  </div> --}}
+  <!--div end for col-sm-4 (3)-->
+  {{else}}
+  <div id="login-div">
+    <div class="forcenter">
+      <!--div start for forcenter (3)-->
+      {{!-- <img src="../../public/assets/login.jpg" alt="MarketPlaceLogo" width="250" height="260" /> --}}
+      <h2>Login here:</h2>
+      <form method="POST" id="login-form" action="/user/login">
+        <div class="form-elem">
+          <!--div start for form-elem-->
+          <label for="email">Email:</label>
+          <input name="email" id="email" type="text" value="{{email}}" placeholder="Enter your Email Address!"><br><br>
+          <label for="password">Password:</label>
+          <input name="password" id="password" type="password" placeholder="Enter your Password">
+          <br>
+          <br>
+          <div id="login-error" style="display: none;">
+            <p>Invalid username or password</p>
+          </div>
+          <br>
+          {{!-- Find replacement for &nbsp --}}
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input type="button" id="login-sumbmit" value="Login" />
+          <br>
+          <br>
+          <h3>New Here?</h3><a href="/signup" class="carrd-link">Click here to Sign-up</a>
+          {{!-- <span id="login-error" hidden>invalid email or password</span> --}}
+        </div>
+        <!--div end for form-elem-->
+      </form>
+    </div>
+  </div>
+  <div id="update-profile-2" style="display: none;">
+    <div class="forcenter">
+      <!--div start for forcenter (3)-->
+      <h3> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Personal Info Changed?</h3>
+      <br>
+      <h3>You can update you personal information here</h3>
+      <form action="/user/updateProfile" method="get">
+        <input type="submit" value="Update Profile" />
+      </form>
+      <br>
+    </div>
+    <!--div end for forcenter (4)-->
+  </div>
+  <!--div end for col-sm-4 (3)-->
 </div>
-  <!--div end for row-->
- {{/if}}
+</div>
+<!--div end for forcenter (5)-->
+<div id="error">
+  <ul id="errorList"></ul>
+</div>
+{{#if error}}
+<div class="login-error">
+  <p>{{error}}</p>
+</div>
+{{/if}}
+
+<!--div end for col-sm-4 (4)-->
+
+{{!-- </div> --}}
+
+<!--div end for row-->
+{{/if}}
