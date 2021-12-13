@@ -34,8 +34,12 @@ async function addToCart(userId, prodId) {
     const prodCol = await product()
     let prodAvailable = await prodCol.findOne({_id : ObjectId(prodId)})
     if(prodAvailable == null) throw [405,"invalid URL"]
+    let sellerProducts = await prodCol.find({sellerId: userId}).toArray()
+    for(let selprod of sellerProducts){
+        if(selprod._id.toString() == prodId) throw [400,"Cannot add own product to cart"];
+    }
     let userCart = await cartCol.findOne({ userId: userId, purchased: false })
-    if (userCart == null) {
+    if(userCart == null){
         let products = []
         products.push(prodId)
         let totalPrice = await calculateToTalPrice(products)
@@ -54,6 +58,7 @@ async function addToCart(userId, prodId) {
                     activeCart: cartid.toString()
                 }
             })
+        
         let productModel = await prodCol.findOne({ _id: ObjectId(prodId) })
         let cart_ = productModel.activeCarts
         cart_.push(cartid.toString())

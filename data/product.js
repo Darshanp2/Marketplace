@@ -37,7 +37,7 @@ async function create(productName, description,price,category,img,sellerID) {
       
     const insertInfo = await productCollection.insertOne(newProduct);
     const newId = insertInfo.insertedId;
-    const productList = await this.get(newId);
+    const productList = await this.getProduct(newId);
     productList["_id"] = productList["_id"].toString();
     return productList;
 

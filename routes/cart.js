@@ -29,7 +29,7 @@ router.get("/addToCart/:id", async (req,res) =>{
             res.status(e[0]).render('posts/error',{error : e[1] , status: e[0]})
         }
         else{
-            res.render('posts/cartPage',{ error : e})
+            res.render('posts/cartPage',{ error : e })
         }
     }
 })
@@ -63,8 +63,9 @@ router.get("/orderHistory", async (req,res) =>{
 })
 
 router.get("/orderDetails/:id", async (req,res) =>{
-    try{let id = req.params.id
-    validateId(prodId)
+    try{
+    let id = req.params.id
+    validateId(id)
     const cartResult = await cartData.getOrder(id)
     res.render('posts/orderDetails',{
         products : cartResult.products,
