@@ -9,7 +9,7 @@ const routes = (app) => {
     app.use('/cart', cartRoutes);
 
     app.use('*', (req, res) => {
-        res.status(404).json({ error: 'Not found' });
+        res.status(404).render("posts/error",{ error: ' URL Not found' });
     });
 };
 module.exports = routes;

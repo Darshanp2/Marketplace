@@ -40,8 +40,8 @@ router.get("/addToCart/:id", async (req,res) =>{
     const addedToCart = await cartData.addToCart(userId,prodId)
     res.redirect("/product/exploreproduct")}
     catch(e){
-        if(e[0] == 405){
-            res.status(e[0]).render('posts/error',{error : e[1] , status: e[0]})
+        if(e[0] == 400){
+            res.status(e[0]).render('posts/error',{error : e[1] })
         }
         else{
             res.render('posts/cartPage',{ error : e })

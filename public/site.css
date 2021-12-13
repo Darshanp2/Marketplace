@@ -36,7 +36,7 @@
 }
 
 .login-error {
-  color: rgb(134, 11, 11);
+  color: rgb(114, 9, 9);
 }
 .login-container {
   margin: 70px;
@@ -260,4 +260,9 @@ textarea {
 .dropdown-content a:hover {
   color: #ffffff;
   background-color: #00a4bd;
+}
+
+[data-ss-social="WhatsApp,Email"]{
+  padding:5px;
+  
 }

@@ -26,26 +26,26 @@ function removeObjectFromId(obj) {
   return obj;
 }
 
-async function updateProfile(name, Email, Password, address, phone, id) {
-
+async function updateProfile(name, Email, Password, address, phoneNumber, id) {
+  // Email = Email.toString().toLowerCase();
+  // Password = Password.toString();
   if(name &&  name.trim().length == 0) throw [400,'Enter Name']
   if(address && address.trim().length == 0) throw [400,'Enter Address']
-  if(password && password.trim().length == 0) throw [400,'Enter Password']
+  if(Password && Password.trim().length == 0) throw [400,'Enter Password']
   if(Email && Email.trim().length == 0) throw [400,'Enter Email']
-  if(!(/[a-zA-Z0-9]/.test(name))) throw [400,'Name should only contain numbers and alphabets']
-  if(!/\d{3}-?\d{3}-?\d{4}$/.test(phoneNumber)) throw [400,'Incorrect Phone Number']
-  if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(password)) throw [400,'Password must have one lower case,one upper case alphabets, one number and one special character']
+  if(name && !(/[a-zA-Z0-9]/.test(name))) throw [400,'Name should only contain numbers and alphabets']
+  if(phoneNumber && !/^\d{3}-?\d{3}-?\d{4}$/.test(phoneNumber)) throw [400,'Incorrect Phone Number']
+  if(Password && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(Password)) throw [400,'Password must have one lower case,one upper case alphabets, one number and one special character']
   
   let objectID = ObjectId(id);
   const userCollection = await user();
-  Email = Email.toString().toLowerCase();
-  Password = Password.toString();
+  
   const userFound = await userCollection.find({email: Email}).toArray()
   if(userFound.length > 0) return false
   let updateObj = {}
   if(name) updateObj.name = name
   if(address) updateObj.address = address
-  if(phone) updateObj.phoneNumber = phone
+  if(phoneNumber) updateObj.phoneNumber = phone
   if(Email) updateObj.email = Email
   if(Password) updateObj.password = await bcrypt.hash(Password, saltRounds);
   const updatedInfo = await userCollection.updateOne(
@@ -79,8 +79,8 @@ async function createUser(name, address, phoneNumber, email, password) {
   if (email && name && password) {
     if (password.length < 6) throw `Password has less than 6 characters `;
   }
-  if (name.length < 4) {
-    throw `Name has less than 4 characters`;
+  if (name.length < 2) {
+    throw `Name has less than 2 characters`;
   }
 
   let nameCheck = /(?:[\w\s][^!@#$%^&*()?//><,.;:'"\{\}\[\]=+~`\-_|\\0-9]+)/;

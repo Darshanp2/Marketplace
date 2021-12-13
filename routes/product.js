@@ -61,7 +61,7 @@ router.get("/delete/:id", async (req, res) => {
   if(req.session.user){
 
   try{
-  let id = req.params.id;
+  let id = xss(req.params.id);
   const removeProduct = await productData.deleteProduct(id);
   if (removeProduct) {
     res.redirect("/user/updateProfile");
@@ -148,44 +148,24 @@ router.get("/exploreproduct", async (req, res) => {
       res.render("posts/explore", {
         title: "Explore",
         partial: "products-list-script",
-        productList: productList,
+        productList: productList
       });
     }
+    
    catch (e) {
     res.status(e[0]).json({ error: e[1] });
   }
 }
 else{
-  res.redirect('/')
+  res.render("posts/landingpage", { error2: "You need to login first" });
 }
 });
 
-router.post("/exploreproduct", async (req, res) => {
-  if(req.session.user){
-  try {
-    const params = req.body;
-    if (!params) {
-      res.status(400).render("posts/explore", { error: "Input not provided for search",title: "Explore"});
-      return;
-    }
-    if (!params.search) {
-      res.status(400).render("posts/explore", {error: "Input not provided for search",title: "Explore"});
-      return;
-    }
-  } catch (e) {
-    res.status(e[0]).json({ error: e[1] });
-  }
-}
-else{
-  res.redirect('/')
-}
-});
 
 router.get("/updateProduct/:id", async (req, res) => {
   if(req.session.user){
   try {
     let id = req.params.id;
-    console.log(id)
     const result = await productData.getProduct(id);
     res.render("posts/updateProduct", {product: result});
   } catch (e) {
@@ -199,14 +179,14 @@ else{
 });
 router.post("/updateproducts/:id", async (req, res) => {
   if(req.session.user){
+   
+  try {
     const rest = req.body;
     const { productName, description, price,category} = rest;
  
  if(productName && productName.trim().length == 0) throw [400,"Enter Product Name"]
  else if(productName && !/[a-zA-Z0-9]/.test(productName)) throw [400,"Product Name should only contain numbers and alphabets"]
  if(description && description .trim().length == 0) throw [400,"Enter description"]
-  try {
-    
     let updatedProduct = await productData.updateProduct(
       
       productName,
@@ -217,7 +197,7 @@ router.post("/updateproducts/:id", async (req, res) => {
     );
       res.redirect("/");
   } catch (e) {
-    res.status(e[0]).render("posts/updateProduct",{ error: e[1] });
+    res.status(e[0]).render("posts/updateProduct",{ error: e[1]});
   }
 }
 else{

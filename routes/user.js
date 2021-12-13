@@ -19,21 +19,23 @@ router.get("/updateProfile", async (req, res) => {
 });
 
 router.post("/updateProfile", async (req, res) => {
+  if(req.session.user){
   try {
     let id = req.session.user
-    let { name, address, phoneNumber,email, password } = xss(req.body);
+    let { name, address, phoneNumber,Email, Password } = req.body;
     if(name &&  name.trim().length == 0) throw [400,'Enter Name']
   if(address && address.trim().length == 0) throw [400,'Enter Address']
-  if(password && password.trim().length == 0) throw [400,'Enter Password']
-  if(email && email.trim().length == 0) throw [400,'Enter Email']
+  if(Password && Password.trim().length == 0) throw [400,'Enter Password']
+  if(Email && Email.trim().length == 0) throw [400,'Enter Email']
   if(name && !(/[a-zA-Z0-9]/.test(name))) throw [400,'Name should only contain numbers and alphabets']
   if(phoneNumber && !/^\d{3}-?\d{3}-?\d{4}$/.test(phoneNumber)) throw [400,'Incorrect Phone Number']
-  if(password && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(password)) throw [400,'Password must have one lower case,one upper case alphabets, one number and one special character']
-  if(email && ! /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email_term.toLowerCase())) throw [400,'Incorrect email format']
-    let updateUser = await userData.updateProfile(
+  if(Password && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(Password)) throw [400,'Password must have one lower case,one upper case alphabets, one number and one special character']
+  if(Email && ! /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(Email.toLowerCase())) throw [400,'Incorrect email format']
+    
+  let updateUser = await userData.updateProfile(
       name,
-      email,
-      password,
+      Email,
+      Password,
       address,
       phoneNumber,
       id
@@ -49,6 +51,10 @@ router.post("/updateProfile", async (req, res) => {
   } catch (e) {
     res.status(e[0]).render('posts/updateProfile',{error : e[1]})
   }
+}
+else{
+  res.redirect('/')
+}
 });
 
 router.get("/", async (req, res) => {
@@ -59,7 +65,7 @@ router.get("/", async (req, res) => {
       res.render("posts/landingpage");
     }
   } catch (e) {
-    res.status(500).json({ error: e });
+    res.status(404).json({ error: e });
   }
 });
 
@@ -77,10 +83,10 @@ router.get("/signup", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const name = req.body.name;
-  const address = req.body.address;
+  const name = xss(req.body.name);
+  const address = xss(req.body.address);
   console.log(address);
-  const phoneNumber = req.body.phoneNumber;
+  const phoneNumber = xss(req.body.phoneNumber);
 
   const email = req.body.email.toString().toLowerCase().trim();
 
@@ -127,9 +133,9 @@ router.post("/signup", async (req, res) => {
         error: "Password must be at least 6 characters.",
       });
     }
-    if (name.length < 4) {
+    if (name.length < 2) {
       res.status(401).render("posts/signup", {
-        error: "Name must be at least 4 characters.",
+        error: "Name must be at least 2 characters.",
       });
     }
 
@@ -177,8 +183,8 @@ router.post("/signup", async (req, res) => {
 });
 
 router.get("/private", async (req, res) => {
-  const email = req.body.email;
-  const name = req.body.name;
+  const email = xss(req.body.email);
+  const name = xss(req.body.name);
 
   if (!req.session.user) {
     res.redirect("/");

@@ -63,7 +63,7 @@ async function getProduct(id) {
 
   return products;
 }
-async  function getAll(){
+async function getAll(){
     const productCollection = await product();
     const productList = await productCollection.find({purchased:false}).toArray();
     return productList;
@@ -141,6 +141,15 @@ async function updateProduct(productName, description,price,category,id) {
   return true;
 }
 
+async function filterWithCost(maxCost){
+  let products = await getAll();
+  let finalList = []
+  for(let prod of products){
+    if(prod.price <= maxCost) finalList.push(prod)
+  }
+  return finalList
+}
+
 
 
 module.exports = {
@@ -150,4 +159,5 @@ module.exports = {
   createcomment,
   deleteProduct,
   updateProduct,
+  filterWithCost
 };
