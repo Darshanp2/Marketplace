@@ -5,7 +5,7 @@ const data = require('../data');
 const cartData = data.cart;
 
 router.get("/", async (req,res) => {
-    if(res.session.user){
+    if(req.session.user){
     
     try{
     let id = req.session.user
@@ -25,7 +25,7 @@ else{
 })
 
 router.get("/addToCart/:id", async (req,res) =>{
-    if(res.session.user){
+    if(req.session.user){
     try{let userId = req.session.user
     let prodId = req.params.id
     validateId(prodId)
@@ -46,7 +46,7 @@ else{
 })
 
 router.get("/removeProduct/:id", async (req,res) =>{
-    if(res.session.user){
+    if(req.session.user){
    try {let userId = req.session.user
     let prodId = req.params.id
     validateId(prodId)
@@ -67,7 +67,7 @@ else{
 })
 
 router.post("/purchase",async (req,res) =>{
-    if(res.session.user){
+    if(req.session.user){
     let userId = req.session.user
     let order = await cartData.placeOrder(userId)
     res.redirect("/")
@@ -78,7 +78,7 @@ router.post("/purchase",async (req,res) =>{
 })
 
 router.get("/orderHistory", async (req,res) =>{
-    if(res.session.user){
+    if(req.session.user){
     let userId = req.session.user
     let orders = await cartData.fetchOrders(userId)
     res.render('posts/orderHistory',{orders:orders})
@@ -89,7 +89,7 @@ router.get("/orderHistory", async (req,res) =>{
 })
 
 router.get("/orderDetails/:id", async (req,res) =>{
-    if(res.session.user){
+    if(req.session.user){
     try{
     let id = req.params.id
     validateId(id)

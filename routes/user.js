@@ -25,11 +25,10 @@ router.post("/updateProfile", async (req, res) => {
   if(address && address.trim().length == 0) throw [400,'Enter Address']
   if(password && password.trim().length == 0) throw [400,'Enter Password']
   if(email && email.trim().length == 0) throw [400,'Enter Email']
-  if(!(/[a-zA-Z0-9]/.test(name))) throw [400,'Name should only contain numbers and alphabets']
-  if(typeof phoneNumber!=='number') throw [400,'Phone Number must be a number']
-  if(!/\d{3}-?\d{3}-?\d{4}$/.test(phoneNumber)) throw [400,'Incorrect Phone Number']
-  if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(password)) throw [400,'Password must have one lower case,one upper case alphabets, one number and one special character']
-  
+  if(name && !(/[a-zA-Z0-9]/.test(name))) throw [400,'Name should only contain numbers and alphabets']
+  if(phoneNumber && !/^\d{3}-?\d{3}-?\d{4}$/.test(phoneNumber)) throw [400,'Incorrect Phone Number']
+  if(password && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(password)) throw [400,'Password must have one lower case,one upper case alphabets, one number and one special character']
+  if(email && ! /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email_term.toLowerCase())) throw [400,'Incorrect email format']
     let updateUser = await userData.updateProfile(
       name,
       email,

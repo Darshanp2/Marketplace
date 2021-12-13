@@ -31,7 +31,7 @@ jQuery(function ($) {
 
 
       if(!(/[a-zA-Z0-9]/.test(name1))) errorList.append(`<li>Name should only contain numbers and alphabets</li>`);
-      if(!/\d{3}-?\d{3}-?\d{4}$/.test(phoneNumber_term)) errorList.append(`<li>Incorrect Phone Number</li>`);
+      if(!/^\d{3}-?\d{3}-?\d{4}$/.test(phoneNumber_term)) errorList.append(`<li>Incorrect Phone Number</li>`);
       if(! /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email_term.toLowerCase())) errorList.append(`<li>Incorrect Email Id</li>`);
       if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(password_term)) errorList.append(`<li>Password must have one lower case,one upper case alphabets, one number and one special character</li>`);
 

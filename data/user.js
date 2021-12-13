@@ -31,9 +31,8 @@ async function updateProfile(name, Email, Password, address, phone, id) {
   if(name &&  name.trim().length == 0) throw [400,'Enter Name']
   if(address && address.trim().length == 0) throw [400,'Enter Address']
   if(password && password.trim().length == 0) throw [400,'Enter Password']
-  if(email && email.trim().length == 0) throw [400,'Enter Email']
+  if(Email && Email.trim().length == 0) throw [400,'Enter Email']
   if(!(/[a-zA-Z0-9]/.test(name))) throw [400,'Name should only contain numbers and alphabets']
-  if(typeof phoneNumber!=='number') throw [400,'Phone Number must be a number']
   if(!/\d{3}-?\d{3}-?\d{4}$/.test(phoneNumber)) throw [400,'Incorrect Phone Number']
   if(!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/.test(password)) throw [400,'Password must have one lower case,one upper case alphabets, one number and one special character']
   

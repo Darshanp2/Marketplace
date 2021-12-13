@@ -18,7 +18,7 @@ const fileStorageEngine = multer.diskStorage({
 const upload = multer({ storage: fileStorageEngine });
 
 router.get("/productdetails/:id", async (req, res) => {
-  if(res.session.user){
+  if(req.session.user){
     validateId(id)
   try {
 
@@ -37,7 +37,7 @@ router.get("/productdetails/:id", async (req, res) => {
 });
 
 router.post("/:id", async (req, res) => {
-  if(res.session.user){
+  if(req.session.user){
 validateId(id)
   try {
     //const { username, password } = usersData;
@@ -57,7 +57,7 @@ else{
 });
 
 router.get("/delete/:id", async (req, res) => {
-  if(res.session.user){
+  if(req.session.user){
 
   try{
   let id = req.params.id;
@@ -76,7 +76,7 @@ else{
 });
 
 router.get("/advertisement", async (req, res) => {
-  if(res.session.user){
+  if(req.session.user){
   try{
       res.render("posts/advertisement", { title: "Post" });
   }
@@ -147,7 +147,7 @@ router.post(
 
 
 router.get("/exploreproduct", async (req, res) => {
-  if(res.session.user){
+  if(req.session.user){
   try {
   
       let productList = await productData.getAll();
@@ -170,7 +170,7 @@ else{
 });
 
 router.post("/exploreproduct", async (req, res) => {
-  if(res.session.user){
+  if(req.session.user){
   try {
     const params = req.body;
     if (!params) {
@@ -207,7 +207,7 @@ else{
 }
 });
 router.post("/updateproducts/:id",upload.single("productImg"), async (req, res) => {
-  if(res.session.user){
+  if(req.session.user){
 
   
   const rest = req.body;
