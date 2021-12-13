@@ -13,7 +13,7 @@ async function getUser(id) {
 
   let objectID = ObjectId(id);
   const userModel = await userCollection.findOne({ _id: objectID });
-  const productRes = await prodCollection.find({ sellerId: id }).toArray();
+  const productRes = await prodCollection.find({sellerId: id }).toArray();
   let result = {
     user: userModel,
     products: productRes,
@@ -26,17 +26,18 @@ function removeObjectFromId(obj) {
   return obj;
 }
 
-async function updateProfile(name, email, Password, address, phone, id) {
+async function updateProfile(name, Email, Password, address, phone, id) {
   let objectID = ObjectId(id);
   const userCollection = await user();
-  email = email.toString().toLowerCase();
+  Email = Email.toString().toLowerCase();
   Password = Password.toString();
-
+  const userFound = await userCollection.find({email: Email}).toArray()
+  if(userFound.length > 0) return false
   let updateObj = {}
   if(name) updateObj.name = name
   if(address) updateObj.address = address
   if(phone) updateObj.phoneNumber = phone
-  if(email) updateObj.email = email
+  if(Email) updateObj.email = Email
   if(Password) updateObj.password = await bcrypt.hash(Password, saltRounds);
   const updatedInfo = await userCollection.updateOne(
     { _id: objectID },
@@ -44,7 +45,6 @@ async function updateProfile(name, email, Password, address, phone, id) {
       $set: updateObj
     }
   );
-  if (updatedInfo.modifiedCount === 0) return false;
   return true;
 }
 
