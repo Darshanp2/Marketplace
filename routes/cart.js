@@ -3,6 +3,7 @@ const { cart } = require('../data');
 const router = express.Router();
 const data = require('../data');
 const cartData = data.cart;
+const xss = require('xss');
 
 router.get("/", async (req,res) => {
     if(req.session.user){
@@ -10,15 +11,22 @@ router.get("/", async (req,res) => {
     try{
     let id = req.session.user
     const cartResult = await cartData.getUserCart(id)
-    res.render('posts/cartPage',{
+    if(cartResult.products.length > 0)
+{    res.render('posts/cartPage',{
         products : cartResult.products,
         totalPrice : cartResult.totalPrice,
         title : 'Cart Page'
     })}
+    else{
+        res.render('posts/cartPage',{
+            products : false,
+            title : 'Cart Page'
+    })
+    }}
     catch(e){
         res.render('posts/cartPage',{ error : e})
 }
-    }
+}
 else{
     res.redirect('/')
 }
@@ -27,7 +35,7 @@ else{
 router.get("/addToCart/:id", async (req,res) =>{
     if(req.session.user){
     try{let userId = req.session.user
-    let prodId = req.params.id
+    let prodId = xss(req.params.id);
     validateId(prodId)
     const addedToCart = await cartData.addToCart(userId,prodId)
     res.redirect("/product/exploreproduct")}
@@ -48,7 +56,7 @@ else{
 router.get("/removeProduct/:id", async (req,res) =>{
     if(req.session.user){
    try {let userId = req.session.user
-    let prodId = req.params.id
+    let prodId = xss(req.params.id);
     validateId(prodId)
     const removeProduct = await cartData.removeFromCart(userId,prodId)
     res.redirect("/cart/")}
@@ -91,7 +99,7 @@ router.get("/orderHistory", async (req,res) =>{
 router.get("/orderDetails/:id", async (req,res) =>{
     if(req.session.user){
     try{
-    let id = req.params.id
+    let id = xss(req.params.id);
     validateId(id)
     const cartResult = await cartData.getOrder(id)
     res.render('posts/orderDetails',{

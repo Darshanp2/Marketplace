@@ -11,7 +11,6 @@ async function create(productName, description,price,category,img,sellerID) {
   if (!description) throw [400,"You must provide with all the details"];
   if (!price) throw [400,"You must provide with all the details"];
   if(!category) throw [400,"You must provide with all the details"]
-  if(!img) throw [400,"You must provide with all the details"]
   if (typeof productName!='string') throw[400,"You must provide string for product Name"];
   if(typeof productName!=='string' || typeof description!=='string') throw [400,'Input must be a string'];
   if(typeof price!=='number')
@@ -71,9 +70,7 @@ async  function getAll(){
 }
 
 async function createcomment(productId, comment, userid) {
-  if(typeof comment!==string) throw [400,'Input must be a string']
-  if(typeof productId!==string) throw [400,'Input must be a string']
-  if(typeof userid!==string)throw [400,'Input must be string']
+  if(typeof comment!=="string") throw [400,'Input must be a string']
 
   let result = true;
   const productsCollection = await product();
@@ -82,15 +79,13 @@ async function createcomment(productId, comment, userid) {
   let objid = ObjectId(productId);
   comment = comment.toString();
   comment = userModel.name + "  :  " + comment;
-  let newcomment = {
-    comment: comment,
-  };
+  let newcomment = []
+  newcomment.push(comment)
   const z = await productsCollection.updateOne(
     { _id: objid },
     { $addToSet: { comments: newcomment } }
   );
   let userInserted = true;
-  if (z.insertedCount === 0) result = false;
   return result;
 }
 
@@ -121,13 +116,12 @@ if(deletedInfo.deletedCount == 0) return false
 return true
 }
 
-async function updateProduct(productName, description,price,category,img,id) {
+async function updateProduct(productName, description,price,category,id) {
 
-  if(productName && productName .trim().length == 0) throw [400,'Enter Product Name']
+  if(productName && productName.trim().length == 0) throw [400,'Enter Product Name']
   else if(productName && !/[a-zA-Z0-9]/.test(productName)) throw [400,'Product Name should only contain numbers and alphabets']
   if(description && description.trim().length == 0) throw [400,'Enter description Name']
   if(price && price<1) throw [400,'Price should be more than equal to 1']
-  if(typeof price!=='number') throw [400,'Input must be a number']
   let objectID = ObjectId(id);
   const productsCollection = await product();
 
@@ -137,7 +131,6 @@ async function updateProduct(productName, description,price,category,img,id) {
   if(description) updateObj.description = description
   if(price) updateObj.price = price
   if(category) updateObj.category = category
-  if(img) updateObj.img = img
   const updatedInfo = await productsCollection.updateOne(
     { _id: objectID },
     {

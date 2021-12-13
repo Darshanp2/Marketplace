@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const userData = data.user;
+const xss = require('xss');
 
 router.get("/updateProfile", async (req, res) => {
   try {
@@ -20,7 +21,7 @@ router.get("/updateProfile", async (req, res) => {
 router.post("/updateProfile", async (req, res) => {
   try {
     let id = req.session.user
-    let { name, address, phoneNumber,email, password } = req.body;
+    let { name, address, phoneNumber,email, password } = xss(req.body);
     if(name &&  name.trim().length == 0) throw [400,'Enter Name']
   if(address && address.trim().length == 0) throw [400,'Enter Address']
   if(password && password.trim().length == 0) throw [400,'Enter Password']

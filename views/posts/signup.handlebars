@@ -7,23 +7,23 @@
     <form method="POST" id="signup-form" action="/signup">
         <div class="form-elem">
             <label for="name">Name:</label>
-            <input name="name" id="name" type="text" value="{{name}}" placeholder="3 characters minimum"  minlength="3">
+            <input name="name" id="name" type="text" value="{{name}}" placeholder="3 characters minimum"  minlength="3" required>
         </div>
         <div class="form-elem">
             <label for="address">Address:</label>
-            <input name="address" id="address" type="text" value="{{address}}" placeholder="Full Address Please"  minlength="5">
+            <input name="address" id="address" type="text" value="{{address}}" placeholder="Full Address Please"  minlength="5" required>
         </div>
         <div class="form-elem">
             <label for="phoneNumber">Phone Number:</label>
-            <input name="phoneNumber" id="phoneNumber" type="text" min="0" value="{{phoneNumber}}" placeholder="Your Phone Number" >
+            <input name="phoneNumber" id="phoneNumber" type="text" min="0" value="{{phoneNumber}}" placeholder="Your Phone Number" required>
         </div>
         <div class="form-elem">
             <label for="email">Email:</label>
-            <input name="email" id="email" type="text" value="{{email}}" placeholder="Your Email" >
+            <input name="email" id="email" type="text" value="{{email}}" placeholder="Your Email" required>
         </div>
         <div class="form-elem">
             <label for="password">Password:</label>
-            <input name="password" id="password" type="password" value="{{password}}" placeholder=" 6 characters minimum" >
+            <input name="password" id="password" type="password" value="{{password}}" placeholder=" 6 characters minimum" required>
         </div><br> 
         <div id="error">
             <ul id="errorList"></ul>
