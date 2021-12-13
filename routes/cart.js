@@ -5,6 +5,8 @@ const data = require('../data');
 const cartData = data.cart;
 
 router.get("/", async (req,res) => {
+    if(res.session.user){
+    
     try{
     let id = req.session.user
     const cartResult = await cartData.getUserCart(id)
@@ -16,9 +18,14 @@ router.get("/", async (req,res) => {
     catch(e){
         res.render('posts/cartPage',{ error : e})
 }
+    }
+else{
+    res.redirect('/')
+}
 })
 
 router.get("/addToCart/:id", async (req,res) =>{
+    if(res.session.user){
     try{let userId = req.session.user
     let prodId = req.params.id
     validateId(prodId)
@@ -29,12 +36,17 @@ router.get("/addToCart/:id", async (req,res) =>{
             res.status(e[0]).render('posts/error',{error : e[1] , status: e[0]})
         }
         else{
-            res.render('posts/cartPage',{ error : e})
+            res.render('posts/cartPage',{ error : e })
         }
     }
+}
+else{
+    res.redirect('/')
+}
 })
 
 router.get("/removeProduct/:id", async (req,res) =>{
+    if(res.session.user){
    try {let userId = req.session.user
     let prodId = req.params.id
     validateId(prodId)
@@ -48,23 +60,39 @@ router.get("/removeProduct/:id", async (req,res) =>{
             res.render('posts/cartPage',{ error : e})
         }
     }
+}
+else{
+    res.redirect('/')
+}
 })
 
 router.post("/purchase",async (req,res) =>{
+    if(res.session.user){
     let userId = req.session.user
     let order = await cartData.placeOrder(userId)
     res.redirect("/")
+    }
+    else{
+        res.redirect('/')
+    }
 })
 
 router.get("/orderHistory", async (req,res) =>{
+    if(res.session.user){
     let userId = req.session.user
     let orders = await cartData.fetchOrders(userId)
     res.render('posts/orderHistory',{orders:orders})
+    }
+    else{
+        res.redirect('/')
+    }
 })
 
 router.get("/orderDetails/:id", async (req,res) =>{
-    try{let id = req.params.id
-    validateId(prodId)
+    if(res.session.user){
+    try{
+    let id = req.params.id
+    validateId(id)
     const cartResult = await cartData.getOrder(id)
     res.render('posts/orderDetails',{
         products : cartResult.products,
@@ -74,6 +102,10 @@ router.get("/orderDetails/:id", async (req,res) =>{
     catch(e){
         res.status(e[0]).render('posts/error',{error : e[1] , status: e[0]})
     }
+}
+else{
+    res.redirect('/')
+}
 })
 
 function validateId(id){

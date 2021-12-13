@@ -2,19 +2,19 @@
     <form action="/user/updateProfile" method="post" id="updateprofile">
         <div class="form-elem">
             <label for="name">Name:</label>
-            <input name="name" id="name" type="text" value="{{name}}" placeholder="3 characters minimum"
+                <input name="name" id="name" type="text" value="{{name}}" placeholder="{{user.name}}" minlength="3"  >
                 minlength="3"><br><br>
 
             <label for="address">Address:</label>
-            <input name="address" id="address" type="text" value="{{address}}" placeholder="Full Address Please"
+                <input name="address" id="address" type="text" value="{{address}}" placeholder="{{user.address}}" minlength="5">
                 minlength="5"><br><br>
 
             <label for="phoneNumber">Phone Number:</label>
             <input name="phoneNumber" id="phoneNumber" type="text" min="0" value="{{phoneNumber}}"
-                placeholder="Your Phone Number"><br><br>
+                    placeholder="{{user.phoneNumber}}" >
 
             <label for="email">Email:</label>
-            <input name="email" id="email" type="text" value="{{email}}" placeholder="Your Email"><br><br>
+                <input name="email" id="email" type="text" value="{{email}}" placeholder="{{user.email}}" >
 
             <label for="password">Password:</label>
             <input name="password" id="password" type="password" value="{{password}}"

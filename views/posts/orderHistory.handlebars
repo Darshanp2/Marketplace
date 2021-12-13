@@ -1,4 +1,7 @@
 {{#each orders}}
-    <h4>this.datePurchased</h4>
-    <h4>this.totalPrice</h4>
-{{#/each}}
+    <h4>{{this.datePurchased}}</h4>
+    <h4>{{this.totalPrice}}</h4>
+    <form action="/cart/orderDetails/{{this._id}}" method="get">
+    <input type="submit" value="Check order details">
+</form>
+{{/each}}

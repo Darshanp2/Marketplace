@@ -9,11 +9,15 @@
     <td><h4>{{this.price}}</h4></td>
     <button onclick="location.href='/cart/removeProduct/{{this._id}}'">remove</button>
 {{/each}}
-
+{{#if error}}
+<form action="/" method="get">
+    <input type="submit" value="Back to Home Page">
+</form>
+{{else}}
 <form action="/cart/purchase" method="post">
     <input type="submit" value="Purchase">
 </form>
-
+{{/if}}
 {{#if error}}
 <p>{{error}}</p>
 {{/if}}
