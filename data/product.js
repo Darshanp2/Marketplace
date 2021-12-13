@@ -6,19 +6,22 @@ const { ObjectId } = require('bson');
 
 async function create(productName, description,price,category,img,sellerID) {
 
-    if (!productName) throw [400,"You must provide with all the details"];
-    if (!description) throw[400,"You must provide with all the details"];
-    if (!price) throw[400,"You must provide with all the details"];
-
-    if (typeof productName!='string') throw[400,"You must provide string for product Name"];
-    var res = productName.replace(/ /g, "");
-    if(res==0) throw[400,"Invalid Product Name"];
-
-    if (typeof description!='string') throw[400,"You must provide string for description"];
-    res = description.replace(/ /g, "");
-    if(res==0) throw[400,"Invalid Description"];
-
-    if (price < 0) throw[400,"You must provide valid price"];
+  if (!price) throw[400,"You must provide with all the details"];
+  if (!productName) throw [400,"You must provide with all the details"];
+  if (!description) throw [400,"You must provide with all the details"];
+  if (!price) throw [400,"You must provide with all the details"];
+  if(!category) throw [400,"You must provide with all the details"]
+  if(!img) throw [400,"You must provide with all the details"]
+  if (typeof productName!='string') throw[400,"You must provide string for product Name"];
+  if(typeof productName!=='string' || typeof description!=='string') throw [400,'Input must be a string'];
+  if(typeof price!=='number')
+  if(!/[a-zA-Z0-9]/.test(productName)) throw [400,'Product Name should only contain numbers and alphabets']
+  var res = productName.replace(/ /g, "");
+  if(res==0) throw[400,"Invalid Product Name"];
+  if (typeof description!='string') throw[400,"You must provide string for description"];
+  res = description.replace(/ /g, "");
+  if(res==0) throw[400,"Invalid Description"];
+  if (price < 1) throw[400,"You must provide valid price"];
     
     const usersCollection=await user()
     const productCollection = await product();
@@ -68,6 +71,10 @@ async  function getAll(){
 }
 
 async function createcomment(productId, comment, userid) {
+  if(typeof comment!==string) throw [400,'Input must be a string']
+  if(typeof productId!==string) throw [400,'Input must be a string']
+  if(typeof userid!==string)throw [400,'Input must be string']
+
   let result = true;
   const productsCollection = await product();
   const userCol = await user();
@@ -114,10 +121,40 @@ if(deletedInfo.deletedCount == 0) return false
 return true
 }
 
+async function updateProduct(productName, description,price,category,img,id) {
+
+  if(productName && productName .trim().length == 0) throw [400,'Enter Product Name']
+  else if(productName && !/[a-zA-Z0-9]/.test(productName)) throw [400,'Product Name should only contain numbers and alphabets']
+  if(description && description.trim().length == 0) throw [400,'Enter description Name']
+  if(price && price<1) throw [400,'Price should be more than equal to 1']
+  if(typeof price!=='number') throw [400,'Input must be a number']
+  let objectID = ObjectId(id);
+  const productsCollection = await product();
+
+
+  let updateObj = {}
+  if(productName) updateObj.productName = productName
+  if(description) updateObj.description = description
+  if(price) updateObj.price = price
+  if(category) updateObj.category = category
+  if(img) updateObj.img = img
+  const updatedInfo = await productsCollection.updateOne(
+    { _id: objectID },
+    {
+      $set: updateObj
+    }
+  );
+  if (updatedInfo.modifiedCount === 0) return false;
+  return true;
+}
+
+
+
 module.exports = {
   create,
   getProduct,
   getAll,
   createcomment,
-  deleteProduct
+  deleteProduct,
+  updateProduct,
 };
