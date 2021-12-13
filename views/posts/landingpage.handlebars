@@ -78,7 +78,7 @@
         <!--div start for forcenter (3)-->
         {{!-- <img src="../../public/assets/login.jpg" alt="MarketPlaceLogo" width="250" height="260" /> --}}
         <h2>Login here:</h2>
-        <form method="POST" id="login-form" action="/login">
+        <form method="POST" id="login-form" action="/user/login">
           <div class="form-elem">
             <!--div start for form-elem-->
             <label for="email">Email:</label>
@@ -88,11 +88,9 @@
             <input name="password" id="password" type="password" placeholder="Enter your Password">
             <br>
             <br>
-            {{#if error}}
-            <div class="login-error">
-              <p>{{error}}</p>
+            <div id="login-error" style="display: none;">
+              <p>Invalid username or password</p>
             </div>
-            {{/if}}
             <br>
             {{!-- Find replacement for &nbsp --}}
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
